@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 작성</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <style>
+        textarea {
+            height: 500px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3 class="my-3 border-bottom pb-2">게시글 작성하기</h3>
+        <form name="frm_pw" method="POST" action="/edit/{{ data._id }}">
+            <div class="mb-3">
+                <label for="notice">공지사항</label>
+                {% if data.notice == 'y' %}
+                <input type="radio" class="form-check-input" name="notice" id="notice" value="y" checked="checked"> 공지글
+                <input type="radio" class="form-check-input" name="notice" id="normal1" value="y"> 일반글
+                {% else %}
+                <input type="radio" class="form-check-input" name="notice" id="notice1" value="y"> 공지글
+                <input type="radio" class="form-check-input" name="notice" id="normal" value="n" checked="checked"> 일반글
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="title">제목</label>
+                <input type="text" name="title" id="title" class="form-control" value="{{ data.title }}">
+            </div>
+            <div class="mb-3">
+                <label for="contents">내용</label>
+                <textarea name="contents" id="contents" class="form-control">{{ data.contents }}</textarea>
+            </div>
+            <input type="submit" value="저장" class="btn btn-primary">
+            <a href="/meet" role="button" class="btn btn-secondary">취소</a>
+        </form>
+    </div>
+</body>
+</html>

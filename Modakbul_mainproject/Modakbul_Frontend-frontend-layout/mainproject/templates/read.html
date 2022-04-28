@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{data.title}}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+<body>
+    <!--서버에서 flash로 넘어온 메시지가 있다면 alert로 출력 -->
+    {%with messages = get_flashed_messages()%}
+      {%if messages %}
+            <script type="text/javascript">
+              alert("{{messages[-1]}}");
+            </script>
+        {%endif%}
+    {%endwith%}
+    <div class="container">
+          <div class="row">
+             <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+                <thead>
+                   <tr>
+                      <th colspan="3" style="background-color: #eeeeee; text-align: center;">공지사항 글보기</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                      <td style="width: 20%;">글제목</td>
+                      <td colspan="2">{{ data.title }}</td>
+                   </tr>
+                   <tr>
+                      <td>작성자</td>
+                      <td colspan="2">{{ data.username }}</td>
+                   </tr>
+                   <tr>
+                      <td>작성일자</td>
+                      <td colspan="2">{{ data.create_time }}</td>
+                   </tr>
+                   <tr>
+                      <td>내용</td>
+                      <td colspan="2" style="min-height: 200px; text-align: left;">{{ data.contents }}</td>
+                   </tr>
+                </tbody>
+             </table>
+          </div>
+            <a href="/edit/{{data._id}}" role="button" class="btn btn-success">수정하기</a>
+            <a href="/delete/{{data._id}}" role="button" class="btn btn-danger">삭제하기</a>
+            <a href="/meet" role="button" class="btn btn-secondary">뒤로가기</a>
+    </div>
+</body>
+</html>

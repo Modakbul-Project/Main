@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../../../Modakbul_Frontend-frontend-layout/Modakbul_Frontend-frontend-layout/myproject/static/parsley.js" type="text/javascript"></script>  <!--유효성 검증 js-->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <meta charset="UTF-8">
+    <title>모닥불</title>
+</head>
+<style>
+    html, body{
+        margin: 0;
+        border: 0;
+        width : 100%;
+        height: 100%;
+    }
+
+    .container{
+    }
+
+    .main{
+        margin: 0;
+        border: 0;
+        width : 100%;
+        height: 100%;
+        display:flex;
+        flex-direction: column;
+    }
+
+    header{
+        top:0px;
+        padding: 1rem 2rem;
+        z-index:10;
+        display:flex;
+        position: relative;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        border-bottom: 1px solid lightgray;
+    }
+    .navbar{
+        display: flex;
+        position: relative;
+    }
+    .search input{
+        height:30px;
+        margin-right:1rem;
+    }
+
+    .contents{
+        flex: auto;
+        overflow: hidden;
+        background-color:aliceblue;
+
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .loginBox{
+        padding:3rem;
+        border: 1px solid gray;
+        border-radius: 10px;
+        background-color: white;
+        text-align: center;
+    }
+
+    .loginBox .logo{
+        display: inline-block;
+        margin-bottom: 50px;
+    }
+
+    .loginBox .formWrap{
+        width: 100%;
+
+    }
+
+    .loginBox form input{
+        margin:0;
+        padding: 0;
+        border:1px solid lightgray;
+        height:2rem;
+        display: block;
+        width: 99.4%;
+    }
+
+    .loginBox form input:last-child, .loginBox .oauth{
+        margin: 0;
+        border: 1px solid lightblue;
+        background-color: aliceblue;
+        width:100%;
+        height:3rem;
+    }
+
+    .loginBox .oauth{
+        background-color: lightblue;
+    }
+
+    .loginOptions ul{
+        margin: 0;
+        padding: 1rem;
+    }
+
+    .loginOptions li{
+        margin: 0;
+        padding-left: 0;
+        display: inline-block;
+    }
+
+    .loginOptions li:nth-child(n+2)::before{
+        display: inline-block;
+        content: '';
+        width:1px;
+        height:12px;
+        background-color: gainsboro;
+    }
+
+</style>
+<body>
+    <!--서버에서 flash로 넘어온 메시지가 있다면 alert로 출력 -->
+    {%with messages = get_flashed_messages()%}
+      {%if messages %}
+            <script type="text/javascript">
+              alert("{{messages[-1]}}");
+            </script>
+        {%endif%}
+    {%endwith%}
+   <div class="main container">
+       <header class="container">
+           <a class="logo" href="/"> 모닥불 </a>
+           <nav class="navbar">
+           <div class="search"><form action="#" method="post">
+               <input type="text" name="keyword" placeholder="검색">
+               <input type="submit" value="src">
+           </form></div>
+           <button class="mypage">mypage</button>
+           </nav>
+        </header>
+       <div class="contents conatainer">
+           <div class="loginBox">
+               <a class="logo" href="/kakao"> 모닥불 </a>
+               <div class="fromWrap">
+                   <form action="#" method="post" data-parsley-validate>
+                   <input type="text" name="id" placeholder="아이디" data-parsley-errors-container="div[id='idError']" data-parsley-error-message="아이디를 입력하세요!" required>
+                    <div class="row">  <!--에러 메시지 출력-->
+                        <div class="col-md-6">
+                         <div id="idError"  style="color:#f00;">
+                         </div>
+                        </div>
+                    </div>
+                   <input type="password" name="password" placeholder="비밀번호" data-parsley-validation-threshold="1" data-parsley-errors-container="div[id='passwordError']" data-parsley-error-message="비밀번호를 입력하세요!" required>
+                   <div class="row">  <!--에러 메시지 출력-->
+                        <div class="col-md-6">
+                         <div id="passwordError"  style="color:#f00;">
+                         </div>
+                        </div>
+                   </div>
+                   <input type="submit" value="로그인">
+               </form>
+               <button class="oauth" onclick="location.href='/google'">Google 아이디로 로그인</button>
+               </div>
+               <div class="loginOptions">
+                   <ul>
+                       <li>
+                           <a href="">비밀번호 찾기</a>
+                       </li>
+                       <li>
+                           <a href="">아이디 찾기</a>
+                       </li>
+                       <li>
+                            <a href="/signup">회원가입</a>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+       </div>
+       <div class="footer conatainer">
+           <!--팀원이나 간단한 정보들적기, 높이 낮아지면 사라짐-->
+           copyright &copy; 2022
+        </div>
+   </div>
+</body>
+</html>

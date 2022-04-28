@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>모닥불</title>
+</head>
+<style>
+    html, body{
+        margin: 0;
+        border: 0;
+        width : 100%;
+        height: 100%;   
+    }
+    
+    .main{
+        margin: 0;
+        border: 0;
+        width : 100%;
+        height: 100%;
+        display:flex;
+        flex-direction: column;
+        position: absolute;
+    }
+    
+    header{
+        top:0px;
+        padding: 1rem 2rem;
+        z-index:10;
+        display:flex;   
+        position: relative;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        border-bottom: 1px solid lightgray;
+    }
+    
+    .navbar{
+        display: flex;
+        position: relative;
+    }
+    
+    .search input{
+        height:30px;
+        margin-right:1rem;
+    }
+    
+    .contents{
+        flex: auto;
+        background-color:aliceblue;
+        display:flex;
+        align-items: center;
+        text-align: center;
+    }
+   
+    .contents{
+        padding:50px;
+        flex-direction: column;
+    }
+    
+    .meetTitleNav{
+        margin-bottom: 30px;
+        width:80%;
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .meetwrap{
+        display: flex;
+        align-items: center;
+    }
+    .meetPic{
+        display: inline-block;
+        width:50px;
+        height: 50px;
+        background-color:gray;
+        margin-right: 10px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    
+    .meetTitleNav h1{
+        display: inline-block;
+        margin: 0;
+    }
+    
+    .meetContentsWrap{
+        width:80%;
+        flex:1 1 0px;
+        display:flex;
+        align-content: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+    }
+    
+    .meetBoard{
+        flex:3 1 0;
+        position: relative;
+        overflow: hidden;
+        background-color: white;
+        border: 1px solid lightgray;
+        padding-left: 0.5rem;
+    }    
+    
+    .sub, .members{
+        width:100%;
+    }
+    .meetBoard h2{
+        text-align: left;
+        padding: 2rem;
+        margin: 0;
+    }
+    
+    .profileList{
+        display: flex;
+    }
+    
+    .profileList .subProfile{
+        padding-left: 2rem;
+        text-align: center;
+    }
+    
+    .subProfile .profilePic{
+        position: relative;
+        display: inline-block;
+        background-color:gray;
+        width:100px;
+        height:100px;
+        border-radius: 50%;
+    }
+    
+    .subProfile .subName{
+        margin-top: 0.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    
+    .subProfile .subLv{
+        font-size:0.5rem;
+        color:gray;
+    }
+    
+    .subProfile button{
+        border: 0;
+        border-radius: 50px;
+        width:48px;
+        height:2rem;
+        margin-top: 0.5rem;
+        color:white;
+    }
+    
+    .subProfile button:nth-of-type(1){
+        margin-right: 5px;
+        background-color: gray;
+    }
+    
+    .subProfile button:nth-of-type(2){
+        background-color: limegreen;
+    }
+    
+    .meetBoard #toggleBt{
+        background-color: aquamarine;
+        display:inline-block;
+        position: absolute;
+        bottom:0;
+        right: 0;
+        margin: 10px;
+    }
+    
+    .meetNotice{
+        flex:1;
+        margin-left:10px;
+        background-color: white;
+        border: 1px solid lightgray;
+        text-align: justify;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    
+    .meetNotice h2{
+        margin: 0;
+        padding-left: 25px;
+        padding-top: 20px;
+    }
+    
+    .meetNotice h2:after{
+        flex-shrink: 0;
+        display: block;
+        content: '';
+        margin-top:15px;
+        width:85%;
+        height:1px;
+        background-color: gainsboro;
+    }
+    
+    .meetNotice .notice{
+        height: 100%;
+        flex:1;
+        overflow: scroll;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 2;
+    }
+    
+    .meetNotice li{
+        text-align: justify;
+        list-style:none;
+        padding-left: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .meetNotice li div{
+        
+    }
+    
+        @media(max-width:1000px){
+        .meetContentsWrap{
+            flex-direction: column;
+        }
+        .meetNotice{
+            margin: 0;
+        }
+        .meetNotice ul{
+            height:100px;
+            
+        }
+        .meetNotice h2{
+            font-size: 1rem;
+        }
+        
+       @media(max-height:800px){
+        .meetNotice{
+            display:none;
+        }
+      }     
+    }
+    
+    #chatBt{
+        display: flex;
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        margin:50px;
+        width:70px;
+        height:70px;
+        background-color: cadetblue;
+        border-radius: 50%;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #chatBox{
+        display: flex;
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        margin:50px;
+        width:400px;
+        height:600px;
+        background-color: cadetblue;
+        border-radius: 10px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #chatCloseBt{
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top:0;
+        padding: 15px;
+        vertical-align:middle;
+    }
+    
+</style>
+<body>
+   <div class="main container">
+       <header class="container">
+           <a class="logo" href="/"> 모닥불 </a>
+           <nav class="navbar">
+           <div class="search"><form action="#" method="post">
+               <input type="text" name="keyword" placeholder="검색">
+               <input type="submit" value="src">
+           </form></div>
+           <button class="mypage">mypage</button>
+           </nav>
+        </header>
+       <div class="contents conatainer"> 
+           <div class="meetTitleNav">
+              <div class="meetwrap">
+              <div class="meetPic">a</div>
+               <h1 class="meetTitle">모임명</h1>
+               </div>
+               <a class="meetOption" href="/meet">모임홈</a>
+           </div>
+           <div class="meetContentsWrap">
+               <div class="meetBoard">
+                  <div class="sub">
+                  <h2>참여 신청</h2>
+                   <div class="profileList">
+                       
+                       <div class="subProfile">
+                        <div class="profilePic">
+                            <img src="" alt="">
+                        </div>
+                        <div class="subName">내이름</div>
+                        <div class="subLv">Lv.23</div>
+                        <button>X</button><button>V</button>
+                   </div>
+                   <div class="subProfile">
+                        <div class="profilePic">
+                            <img src="" alt="">
+                        </div>
+                        <div class="subName">내이름</div>
+                        <div class="subLv">Lv.23</div>
+                        <button>X</button><button>V</button>
+                   </div>
+                   
+                   </div>
+                </div>
+                <div class="members">
+                  <h2>멤버 목록</h2>
+                   <div class="profileList">
+                       
+                       <div class="subProfile">
+                        <div class="profilePic">
+                            <img src="" alt="">
+                        </div>
+                        <div class="subName">내이름</div>
+                        <div class="subLv">Lv.23</div>
+                        <button>탈퇴</button>
+                   </div>
+                   <div class="subProfile">
+                        <div class="profilePic">
+                            <img src="" alt="">
+                        </div>
+                        <div class="subName">내이름</div>
+                        <div class="subLv">Lv.23</div>
+                        <button>탈퇴</button>
+                   </div> 
+                </div>   
+               </div>
+               <div id="toggleBt">
+                       this is toggle
+                   </div>
+                   <script>
+                    $('.sub').hide();
+                    $('#toggleBt').click(function(){
+                        $('.sub').toggle();
+                        $('.members').toggle();
+                    });
+                   </script>
+               </div>
+               <div class="meetNotice">
+                   <h2>공지사항</h2>
+                   <div class="notice">
+                       <ul>
+                       <li>
+                           <span>공지1</span> <div class="noticeAdmin"><a href="/makenotice">수정</a> <a href="#">삭제</a></div>
+                       </li>
+                   </ul>
+                   </div>
+                   
+               </div>
+           </div>
+       </div>
+       <div id="chatBt">chatBt</div>
+       <div id="chatBox">chatBox 
+       <div id="chatCloseBt">X</div></div>
+       <script>
+        $('#chatBox').hide();
+        $('#chatBt').click(function(){
+            $('#chatBox').show();
+        });
+        $('#chatCloseBt').click(function(){
+            $('#chatBox').hide();
+        });
+       </script>
+       <div class="footer conatainer">
+           <!--팀원이나 간단한 정보들적기, 높이 낮아지면 사라짐-->
+        </div>
+   </div>
+</body>
+</html>

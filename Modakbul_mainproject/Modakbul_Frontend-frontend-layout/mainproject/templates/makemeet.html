@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<style>
+    
+    html,body{
+        width:100%;
+        height:100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .detailsBg {
+        width:100%;
+        height:100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .detailsBg{
+        background: rgba(255, 255, 255, 0.5);
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top:0;
+        z-index: 100;
+    }
+    
+    .detailsWrap{
+        max-width: 450px;
+        width:80%;
+        height:80%;
+        background-color: white;
+        border:1px solid lightgray;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        padding:2rem;
+        overflow:scroll;
+        -ms-overflow-style:none;
+        scrollbar-width:none;
+    }
+    
+    .detailsWrap::-webkit-scrollbar{
+        display: none;
+    }
+    
+    .detailTitle{
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    .detailTitle .meetPic{
+        width:50px;
+        height:50px;
+        background-color: gainsboro;
+        border-radius: 50%;
+    }
+    
+    .detailTitle .formTitle{
+        margin: 0;
+        padding: 0;
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .detailTitle .formTitle > input:first-child{
+        width:250px;
+        font-size:2rem;
+        font-weight: bold;
+        border: 0;
+    }
+    
+    .detailTitle .formTitle > input:nth-child(2){
+        width:250px;
+        font-size:1rem;
+        border: 0;
+    }
+    
+    .detailTitle .formTitle > span{
+        position: absolute;
+        right:2rem;
+        bottom: 0;
+        color:gray;
+    }
+        
+    .detailTitle .formTitle > span > input{
+        display: inline-block;   
+    }
+
+    .detailTags h5{
+        margin:10px 0px;
+    }
+    
+    .detailTags ul{
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+    }
+    
+    .detailTags #bigTag li, .detailTags #makeTag li:nth-child(1), .detailTags #makeTag li:nth-child(3) button{
+        border-radius: 50px;
+        padding:10px;
+        background-color: gainsboro;
+        margin-right: 5px;
+        
+    }
+    
+    .detailTags #bigTag li select, .detailTags #makeTag li:nth-child(1) select{
+        width:100px;
+        border: 0;
+        background-color: rgb(0,0,0,0);
+    }
+    
+    .detailTags #makeTag li:nth-child(2){
+        flex:1;    
+    }
+    
+    .detailTags #makeTag li:nth-child(2) input{
+        border:1px solid lightgray;
+        width:95%;
+        height:30px;
+    }
+    .detailTags #makeTag li:nth-child(3) button{
+        padding:10px 20px;
+        margin-left: 5px;
+        border: 0;
+    }
+    
+    .detailTags #smallTag li{
+        padding: 10px;
+        font-size: 0.1rem;
+    }
+    
+    .detailTags #smallTag li::before{
+        content: "# ";
+        font-weight: bold;
+        font-size: 0.8rem;
+    }
+    
+    .detailContents{
+        flex:1;
+        border: 1px solid lightgray;
+        overflow:hidden;
+    }
+    
+    .detailContents textarea{
+        border: 0;
+        resize:none;
+        width:100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .detailContents textarea:focus{
+        outline:none;
+    }
+    
+    .detailContents img{
+        max-width:100%;
+    }
+    
+    .detailFooter{
+        text-align: right;
+        padding-top: 1rem;
+    }
+    
+    .detailFooter submit{
+        border: 0;
+        color:white;
+        background-color: gray;
+        font-weight: bold;
+        padding:10px 40px;
+        border-radius: 50px;
+        
+    }
+    
+    .detailTitle button{
+        position: absolute;
+        right:0;
+        top:0;
+        background: 0;
+        border: 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    
+    form{
+        display: flex;
+        flex-direction: column;
+        flex:1;
+    }
+    
+    </style>
+    
+<body>
+    
+    <div class="detailsBg">
+        <div class="detailsWrap">
+           <form action="#">
+            <div class="detailTitle">
+               <button>X</button>
+                <div class="meetPic"><img src="" alt=""></div>
+                <div class="formTitle">
+                    <input type="text" placeholder="모임명">
+                    <input type="text" placeholder="모집글 제목">
+                    <span>비공개 <input type="checkbox"></span>
+                </div>
+            </div>
+            <div class="detailTags">
+               <h5>분류 *</h5>
+                <ul id="bigTag">
+                    <li>
+                    <select name="location" id="loc">
+                        <optgroup label="도시명"></optgroup>
+                        <option value="지역명">지역</option>
+                    </select>
+                   </li>
+                    <li>
+                    <select name="category" id="category">
+                        <optgroup label="대분류"></optgroup>
+                    <option value="주제명">주제</option>
+                    </select>
+                    </li>
+                    <li>
+                    <select name="headcount" id="head">
+                    <option value="">인원수</option>
+                    </select>  
+                    </li>
+                </ul>
+                <h5>태그</h5>
+                <ul id="makeTag">
+                   <li>
+                   <select name="tag" id="tag">
+                    <option value="">태그</option>
+                    </select>  
+                    </li>
+                    <li>
+                        <input type="text" placeholder="직접 작성하기">
+                    </li> 
+                    <li>
+                        <button onclick="">추가</button>
+                    </li>
+                </ul>
+                <ul id="smallTag">
+                    <li>느긋한</li>
+                    <li>주제자유</li>
+                </ul>
+            </div>
+            <div class="detailContents">
+              <textarea name="meetDetail" id="meetDetail">
+                  <img src="map.png" alt="">
+                본문 내용 lorem ipsum
+              </textarea>
+            </div>
+            <div class="detailFooter">
+                    <submit>모임 등록</submit>
+            </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(".detailTitle button").click(function(){
+            $(".detailsBg").hide();
+        })
+    </script>
+</body>
+</html>

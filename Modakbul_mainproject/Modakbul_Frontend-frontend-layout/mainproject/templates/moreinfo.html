@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<style>
+    
+    html,body{
+        width:100%;
+        height:100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .detailsBg {
+        width:100%;
+        height:100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .detailsBg{
+        background: rgba(255, 255, 255, 0.5);
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top:0;
+        z-index: 100;
+    }
+    
+    .detailsWrap{
+        max-width: 450px;
+        width:80%;
+        height:80%;
+        background-color: white;
+        border:1px solid lightgray;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        padding:2rem;
+    }
+    
+    .detailTitle{
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    .detailTitle .meetPic{
+        width:50px;
+        height:50px;
+        background-color: gainsboro;
+        border-radius: 50%;
+    }
+    
+    .detailTitle h2{
+        margin: 0;
+        padding: 0;
+        margin-left: 10px;
+    }
+    
+    .detailTitle span{
+        margin-left:10px;
+        padding-top: 10px;
+    }
+    
+    .detailTags ul{
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+    }
+    
+    .detailTags #bigTag li{
+        padding:10px 20px;
+        margin-right: 5px;
+        background-color: gainsboro;
+        border-radius: 50px;
+    }
+    
+    .detailTags #smallTag li{
+        padding: 10px;
+        font-size: 0.1rem;
+    }
+    
+    .detailTags #smallTag li::before{
+        content: "# ";
+        font-weight: bold;
+        font-size: 0.8rem;
+    }
+    
+    .detailContents{
+        flex:1;
+        border: 1px solid lightgray;
+        overflow-y: scroll;
+    }
+    
+    .detailContents img{
+        max-width:100%;
+    }
+    
+    .detailFooter{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 1rem;
+    }
+    
+    #numPeople{
+        font-size: 0.8rem;
+        font-weight: bold;
+        color:darkslategray;
+    }
+    
+    #numPeople span:nth-child(1){
+        font-size: 1.5rem;
+    }
+    
+    #numPeople span:nth-child(2){
+        font-size: 1rem;
+    }
+    
+    #numPeople span:nth-child(3){
+        font-size: 1rem;
+    }
+    
+    .detailFooter button{
+        border: 0;
+        color:white;
+        background-color: gray;
+        font-weight: bold;
+        padding:10px 40px;
+        border-radius: 50px;
+    }
+    
+    .detailTitle button{
+        position: absolute;
+        right:0;
+        top:0;
+        background: 0;
+        border: 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    </style>
+    
+<body>
+    
+    <div class="detailsBg">
+        <div class="detailsWrap">
+            <div class="detailTitle">
+               <button>X</button>
+                <div class="meetPic"><img src="" alt=""></div>
+                <h2>봄맞이 야외스터디 모집</h2>
+                <span>Lv.23</span>
+            </div>
+            <div class="detailTags">
+                <ul id="bigTag">
+                    <li>서울시 강남구</li>
+                    <li>자유 주제</li>
+                    <li>2~5명</li>
+                </ul>
+                <ul id="smallTag">
+                    <li>느긋한</li>
+                    <li>주제자유</li>
+                </ul>
+            </div>
+            <div class="detailContents">
+               <img src="map.png" alt="">
+            </div>
+            <div class="detailFooter">
+                <div id="numPeople">현재 인원 수 <span>2</span><span>/</span><span>5</span></div>
+                <button onclick="location.href='#'">참여하기</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(".detailTitle button").click(function(){
+            $(".detailsBg").hide();
+        })
+    </script>
+</body>
+</html>

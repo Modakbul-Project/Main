@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<style>
+    
+    html,body{
+        width:100%;
+        height:100%;
+        margin: 0;
+        padding: 0;
+    }
+  
+    .detailsBg {
+        width:100%;
+        height:100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .detailsBg{
+        background: rgba(255, 255, 255, 0.5);
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top:0;
+        z-index: 100;
+    }
+    
+    .profileWrap button{
+        position: absolute;
+        right:0;
+        top:0;
+        background: 0;
+        border: 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 1rem;
+    }
+    
+    .detailsWrap{
+        max-width: 450px;
+        width:80%;
+        height:80%;
+        background-color: white;
+        border:1px solid lightgray;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        padding:2rem;
+    }
+    
+    .profileWrap{
+        max-width: 500px;
+        width:90%;
+        position: relative;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        background-color: white;
+        display: flex;
+        overflow: hidden;
+
+    }
+    
+    .profileDetail{
+        display: flex;
+        margin:2rem;
+        text-align: center;
+    }
+    
+    .detailWrap{
+        min-width:200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    
+    .detailWrap p, .detailWrap h2{
+        margin: 0;
+        margin-bottom: 0.5rem;
+    }
+    
+        .detailWrap h2{
+        margin-top: 0.5rem;
+    }
+    
+    .detailWrap p, .sameMeet p{
+        font-size: 0.8rem;
+    }
+    
+    .profileImg{
+        width:100px;
+        height:100px;
+        background-color: gray;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    
+    img{
+        width:100%;
+    }
+    
+    .meetWrap{
+        margin-left: 20px;
+        border-left: 1px solid gray;
+        padding-left: 20px;
+    }
+    
+    .meetWrap h5{
+        margin: 0;
+        margin-bottom: 10px;
+    }
+    
+    .sameMeetWrap{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    
+    .sameMeet{
+        flex:0 1 auto;
+        text-align: center;
+        margin-top: 10px;
+    }
+    
+    .sameMeet .meetPic{
+        overflow: hidden;
+        width:50px;
+        height:50px;
+        background-color: gray;
+        border-radius: 50%;
+    }
+    .sameMeet p{
+        margin: 0;
+    }    
+    </style>
+    
+<body>
+   <div class="detailsBg">
+       <div class="profileWrap">
+        <button>X</button>
+        <div class="profileDetail">
+            <div class="detailWrap">
+            <div class="profileImg"><img src="%EB%88%84%EB%8B%88.png" alt=""></div>
+            <h2>내이름</h2>
+            <p>프론트엔드와 디자인을 함께 하는 사람입니다.</p>
+            </div>
+            <div class="meetWrap">
+                <h5>함께하는 모임</h5>
+            <div class="sameMeetWrap">
+              
+               <div class="sameMeet">
+                   <div class="meetPic"><img src="%EB%88%84%EB%8B%88.png" alt=""></div>
+                   <p>모임명</p>
+               </div>
+                              <div class="sameMeet">
+                   <div class="meetPic"><img src="" alt=""></div>
+                   <p>모임명</p>
+               </div>
+                              <div class="sameMeet">
+                   <div class="meetPic"><img src="" alt=""></div>
+                   <p>모임명</p>
+               </div>
+               <div class="sameMeet">
+                   <div class="meetPic"><img src="" alt=""></div>
+                   <p>모임명</p>
+               </div>
+               <div class="sameMeet">
+                   <div class="meetPic"><img src="" alt=""></div>
+                   <p>모임명</p>
+               </div>
+                <!-- 3개씩 틀로 나옴 -->
+            </div>
+            
+        </div>
+    </div>
+            
+    </div>
+   </div>
+    <script>
+        $(".profileWrap button").click(function(){
+            $(".detailsBg").hide();
+        })
+    </script>
+</body>
+</html>
