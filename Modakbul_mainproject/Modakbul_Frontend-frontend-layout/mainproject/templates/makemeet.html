@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>모임 생성하기</title>
 </head>
 
 <style>
-    
+
     html,body{
         width:100%;
         height:100%;
         margin: 0;
         padding: 0;
     }
-    
+
     .detailsBg {
         width:100%;
         height:100%;
         margin: 0;
         padding: 0;
     }
-    
+
     .detailsBg{
         background: rgba(255, 255, 255, 0.5);
         position: fixed;
@@ -31,7 +31,7 @@
         top:0;
         z-index: 100;
     }
-    
+
     .detailsWrap{
         max-width: 450px;
         width:80%;
@@ -46,11 +46,11 @@
         -ms-overflow-style:none;
         scrollbar-width:none;
     }
-    
+
     .detailsWrap::-webkit-scrollbar{
         display: none;
     }
-    
+
     .detailTitle{
         display: flex;
         align-items: center;
@@ -63,7 +63,7 @@
         background-color: gainsboro;
         border-radius: 50%;
     }
-    
+
     .detailTitle .formTitle{
         margin: 0;
         padding: 0;
@@ -71,35 +71,35 @@
         display: flex;
         flex-direction: column;
     }
-    
+
     .detailTitle .formTitle > input:first-child{
         width:250px;
         font-size:2rem;
         font-weight: bold;
         border: 0;
     }
-    
+
     .detailTitle .formTitle > input:nth-child(2){
         width:250px;
         font-size:1rem;
         border: 0;
     }
-    
+
     .detailTitle .formTitle > span{
         position: absolute;
         right:2rem;
         bottom: 0;
         color:gray;
     }
-        
+
     .detailTitle .formTitle > span > input{
-        display: inline-block;   
+        display: inline-block;
     }
 
     .detailTags h5{
         margin:10px 0px;
     }
-    
+
     .detailTags ul{
         display: flex;
         list-style: none;
@@ -107,53 +107,53 @@
         margin: 0;
         align-items: center;
     }
-    
-    .detailTags #bigTag li, .detailTags #makeTag li:nth-child(1), .detailTags #makeTag li:nth-child(3) button{
+
+    .detailTags #bigTag li, .detailTags #makeTag li:nth-child(1), .detailTags #makeTag li:nth-child(3) input[type=button]{
         border-radius: 50px;
         padding:10px;
         background-color: gainsboro;
         margin-right: 5px;
-        
+
     }
-    
+
     .detailTags #bigTag li select, .detailTags #makeTag li:nth-child(1) select{
         width:100px;
         border: 0;
         background-color: rgb(0,0,0,0);
     }
-    
+
     .detailTags #makeTag li:nth-child(2){
-        flex:1;    
+        flex:1;
     }
-    
+
     .detailTags #makeTag li:nth-child(2) input{
         border:1px solid lightgray;
         width:95%;
         height:30px;
     }
-    .detailTags #makeTag li:nth-child(3) button{
+    .detailTags #makeTag li:nth-child(3) input[type=button]{
         padding:10px 20px;
         margin-left: 5px;
         border: 0;
     }
-    
+
     .detailTags #smallTag li{
         padding: 10px;
         font-size: 0.1rem;
     }
-    
+
     .detailTags #smallTag li::before{
         content: "# ";
         font-weight: bold;
         font-size: 0.8rem;
     }
-    
+
     .detailContents{
         flex:1;
         border: 1px solid lightgray;
         overflow:hidden;
     }
-    
+
     .detailContents textarea{
         border: 0;
         resize:none;
@@ -162,30 +162,30 @@
         padding: 0;
         margin: 0;
     }
-    
+
     .detailContents textarea:focus{
         outline:none;
     }
-    
+
     .detailContents img{
         max-width:100%;
     }
-    
+
     .detailFooter{
         text-align: right;
         padding-top: 1rem;
     }
-    
-    .detailFooter submit{
+
+    .detailFooter input[type=submit]{
         border: 0;
         color:white;
         background-color: gray;
         font-weight: bold;
         padding:10px 40px;
         border-radius: 50px;
-        
+
     }
-    
+
     .detailTitle button{
         position: absolute;
         right:0;
@@ -195,85 +195,215 @@
         font-size: 1.2rem;
         font-weight: bold;
     }
-    
+
     form{
         display: flex;
         flex-direction: column;
         flex:1;
     }
-    
+
+    .meetPic img{
+        width:100%;
+        border-radius: 50%;
+    }
+
+    .meetPic label{
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        background-color: rgba( 0, 0, 0, 0.5 );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color:white;
+        cursor: pointer;
+    }
+
+    .meetPic label:hover{
+        background-color: rgba( 50, 50, 50, 0.5 );
+    }
     </style>
-    
+
 <body>
-    
     <div class="detailsBg">
         <div class="detailsWrap">
-           <form action="#">
+           <form method="post" action="/makemeet" enctype = "multipart/form-data">
             <div class="detailTitle">
                <button>X</button>
-                <div class="meetPic"><img src="" alt=""></div>
+                <div class="meetPic">
+                    <label for="chooseProfile"><img src=""></label>
+                    <input type="file" id="chooseProfile" name="meet_profile" accept="image/*" style="display:none;">
+                </div>
                 <div class="formTitle">
-                    <input type="text" placeholder="모임명">
-                    <input type="text" placeholder="모집글 제목">
-                    <span>비공개 <input type="checkbox"></span>
+                    <input type="text" name="meet_name" placeholder="모임명">
+                    <input type="text" name="meet_title" placeholder="모집글 제목">
                 </div>
             </div>
             <div class="detailTags">
                <h5>분류 *</h5>
                 <ul id="bigTag">
                     <li>
-                    <select name="location" id="loc">
-                        <optgroup label="도시명"></optgroup>
-                        <option value="지역명">지역</option>
-                    </select>
+                        <select name="location" id="loc">
+                            <optgroup label="도시명">
+                                <option value='0'>지역</option>
+                                <option value='seoul'>서울</option>
+                                <option value='busan'>부산</option>
+                                <option value='daegu'>대구</option>
+                                <option value='incheon'>인천</option>
+                                <option value='gwangju'>광주</option>
+                                <option value='daejeon'>대전</option>
+                                <option value='ulsan'>울산</option>
+                                <option value='gyeonggi'>경기</option>
+                                <option value='gangwon'>강원</option>
+                                <option value='chungnam'>충남</option>
+                                <option value='chungbuk'>충북</option>
+                                <option value='gyeongnam'>경남</option>
+                                <option value='gyeongbuk'>경북</option>
+                                <option value='jeonnam'>전남</option>
+                                <option value='jeonbuk'>전북</option>
+                                <option value='jeju'>제주</option>
+                            </optgroup>
+                        </select>
                    </li>
                     <li>
-                    <select name="category" id="category">
-                        <optgroup label="대분류"></optgroup>
-                    <option value="주제명">주제</option>
-                    </select>
+                        <select name="category" id="category">
+                            <optgroup label="대분류">
+                                <option value="주제명">주제</option>
+                                <option value='스터디'>스터디</option>
+                                <option value='스포츠'>스포츠</option>
+                                <option value='친목'>친목</option>
+                                <option value='독서'>독서</option>
+                                <option value='등산'>등산</option>
+                                <option value='취미'>취미</option>
+                            </optgroup>
+                        </select>
                     </li>
                     <li>
-                    <select name="headcount" id="head">
-                    <option value="">인원수</option>
-                    </select>  
+                        <select name="headcount" id="head">
+                                <option value="0">인원수</option>
+                                <option value='1'>1</option>
+                                <option value='2'>2</option>
+                                <option value='3'>3</option>
+                                <option value='4'>4</option>
+                                <option value='5'>5</option>
+                                <option value='6'>6</option>
+                                <option value='7'>7</option>
+                                <option value='8'>8</option>
+                                <option value='9'>9</option>
+                                <option value='10'>10</option>
+                        </select>
+                    </li>
+                </ul>
+                <h5>모임 장소</h5>
+                <ul id="locTag">
+                    <li>
+                        <input type="text" name="address" id="address">
+                   </li>
+                    <li>
+                        <input type="button" id="search" value="검색" onclick="add_search()"/>
                     </li>
                 </ul>
                 <h5>태그</h5>
                 <ul id="makeTag">
-                   <li>
-                   <select name="tag" id="tag">
-                    <option value="">태그</option>
-                    </select>  
+                    <li>
+                        <input type="text" id="addTag" placeholder="직접 작성하기">
                     </li>
                     <li>
-                        <input type="text" placeholder="직접 작성하기">
-                    </li> 
-                    <li>
-                        <button onclick="">추가</button>
+                        <input type="button" onclick="addList()" value="추가">
                     </li>
                 </ul>
                 <ul id="smallTag">
-                    <li>느긋한</li>
-                    <li>주제자유</li>
                 </ul>
             </div>
             <div class="detailContents">
-              <textarea name="meetDetail" id="meetDetail">
-                  <img src="map.png" alt="">
-                본문 내용 lorem ipsum
-              </textarea>
+              <textarea name="meetDetail" id="meetDetail"></textarea>
             </div>
+               <div id="map" style="width:450px;height:250px; margin-top:10px;"></div>
+               <div>
+                    <input type="hidden" name="tags" id="tags">
+                    <input type="hidden" name="lat" id="search_lat"> <!-- 입력된 주소에 해당하는 위도 -->
+                    <input type="hidden" name="lng" id="search_lng"> <!-- 입력된 주소에 해당하는 경도 -->
+                </div>
             <div class="detailFooter">
-                    <submit>모임 등록</submit>
+                <input type="submit" value="모임 등록">
             </div>
             </form>
         </div>
     </div>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d8a73cfa5a833cba814b8937d2b54a0e&libraries=services"></script>
+    <script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(37.5826052,127.0101245), // 지도의 중심좌표
+			level: 3    // 지도의 확대 레벨
+		};
+        //지도를 생성합니다.
+		var map = new kakao.maps.Map(container, options);
+
+        //주소-좌표 변환 객체를 생성합니다.
+		var geocoder = new kakao.maps.services.Geocoder();
+
+		//주소로 좌표를 검색합니다.
+		function add_search(){
+		    //입력된 주소값을 add_search변수에 저장한다.
+		    var add_search = document.getElementById('address').value;
+		    geocoder.addressSearch(add_search, function(result, status) {
+                //정삭적으로 검색이 완료됐으면
+                if(status == kakao.maps.services.Status.OK) {
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    //결과값으로 받은 위치를 마커로 표시합니다.
+                    var marker = new kakao.maps.Marker({
+                        map:map,
+                        position:coords
+                    });
+
+                    // 위도, 경도 텍스트 필드에 좌표값을 입력한다.
+                    document.getElementById('search_lat').value = result[0].y
+                    document.getElementById('search_lng').value = result[0].x
+
+                    // 지도의 중심을 마커의 위치로 이동한다.
+                    map.setCenter(coords);
+                }
+		    });
+		}
+	</script>
     <script>
         $(".detailTitle button").click(function(){
             $(".detailsBg").hide();
         })
+
+        function addList()  {  //직접 작성한 태그 추가하는 함수
+          // 1. 추가할 값을 input창에서 읽어온다
+          const addTag = document.getElementById('addTag').value;
+
+          // 2. 추가할 li element 생성
+          // 2-1. 추가할 li element 생성
+          const li = document.createElement("li");
+
+          // 2-2. li에 id 속성 추가
+          li.setAttribute('id',addTag);
+
+          // 2-3. li에 text node 추가
+          const textNode = document.createTextNode(addTag);
+          li.appendChild(textNode);
+
+          // 3. 생성된 li를 ul에 추가
+          document
+            .getElementById('smallTag')
+            .appendChild(li);
+
+          // 4. 입력한 tag의 값을 tags에 추가 (tags는 입력된 tag들을 문자열로 연결해 서버에 전달하는 역할)
+          document.getElementById('tags').value += '#'+document.getElementById('addTag').value
+
+          // 5. input의 값 초기화
+          document.getElementById('addTag').value = "";
+
+
+        }
+
+
     </script>
 </body>
 </html>

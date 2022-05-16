@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from bson.json_util import ObjectId
 import os
 from datetime import timedelta, datetime
+from werkzeug.utils import secure_filename
 
 now = datetime.now()
 
@@ -14,7 +15,7 @@ app.config['GOOGLE_OAUTH2_CLIENT_SECRETS_FILE'] = './static/client_secret_.json'
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=60) # 로그인 지속시간을 정합니다. 60분(1시간)
 
 oauth = OAuth(app)
-with open('./static/client_secret.json') as f:
+with open('/Users/imin-u/Downloads/Modakbul_Backend-minwoo 2/Modakbul_Backend-minwoo/static/client_secret.json') as f:
     json_data=json.load(f)
 
 
@@ -36,7 +37,7 @@ db = conn.Test
 @app.route('/', methods=['GET'])
 def main():
     # collection 생성
-    collect = db.mongoKakao
+    collect = db.mongoMeeting
 
     # select 쿼리값 results에 저장
     results = collect.find()
@@ -158,7 +159,7 @@ def signup():
             "birth": birth,
             "email": email,
             "phone": phone,
-            "meeting": "",
+            "meeting": [],
             "role": ""
         }
         # userid가 db에 있는지 검색
@@ -233,13 +234,6 @@ def my_page():
     else:
         return redirect('/login')
 
-@app.route('/makepage')
-def make_page():
-    if 'userid' in session:  # 로그인 여부 확인
-        return render_template('makemeet.html')
-    else:
-        return redirect('/login')
-
 @app.route('/mymeets')
 def my_meets():
     if 'userid' in session:  # 로그인 여부 확인
@@ -247,14 +241,42 @@ def my_meets():
     else:
         return redirect('/login')
 
-@app.route('/pfedit')
+@app.route('/pfedit', methods=['GET', 'POST'])
 def profile_edit():
     if 'userid' in session:  # 로그인 여부 확인
+        if request.method == "POST":
+            # collection 생성
+            collect = db.mongoUser
+
+            # form에서 값이 넘어오면 변수에 값 할당
+            # 넘어오지 않는다면 null값 할당
+            f = request.files["profile"]
+            profile = f.filename
+            username = request.form["username"]
+            introduce = request.form["introduce"]
+
+            doc = {}
+
+            if profile:  # form에서 넘어온 profile 값이 있다면
+                f.save('./static/profile/' + secure_filename(profile))  # 프로필 이미지 파일 저장 (경로: static/profile/)
+                doc.update({'profile': profile})
+                session['profile'] = './static/profile/' + profile
+            if username:  # form에서 넘어온 username 값이 있다면
+                doc.update({'username': username})
+                session['username'] = username
+            if introduce:  # form에서 넘어온 introduce 값이 있다면
+                doc.update({'introduce': introduce})
+
+            # 변경된 값 db에 반영
+            collect.update_one({'userid': session['userid']}, {'$set': doc})
+            redirect(url_for('my_page'))
+
+        # GET일 경우
         return render_template('profileedit.html')
     else:
         return redirect('/login')
 
-@app.route('/meet')
+@app.route('/meetpage')
 def meet_page():
     if 'userid' in session:  # 로그인 여부 확인
         # collection 생성
@@ -263,6 +285,67 @@ def meet_page():
         # select 쿼리값 results에 저장
         results = collect.find()
         return render_template('meetpage.html', data=results)
+    else:
+        return redirect('/login')
+
+@app.route('/makemeet', methods=['GET', 'POST'])
+def make_meet():
+    if 'userid' in session:  # 로그인 여부 확인
+        if request.method == "POST":
+            # collection 생성
+            collect = db.mongoMeeting
+            user_collect = db.mongoUser
+
+            f = request.files["meet_profile"]
+            meet_profile = f.filename
+            meet_name = request.form["meet_name"]
+            meet_title = request.form["meet_title"]
+            location = request.form["location"]
+            category = request.form["category"]
+            headcount = request.form["headcount"]
+            currentcount = 1
+            address = request.form["address"]
+            meetDetail = request.form["meetDetail"]
+            tags = request.form["tags"]
+            lat = request.form["lat"]
+            lng = request.form["lng"]
+            userid = session['userid']
+            done = False  # 모집중-(done: False), 모집완료-(done: True)
+
+            tag_arr = tags.split('#')  # 태그들이 저장된 배열
+
+            # document 생성
+            doc = {
+                "meet_name": meet_name,
+                "leader_id": userid,
+                "meet_title": meet_title,
+                "location": location,
+                "category": category,
+                "headcount": headcount,
+                "currentcount": currentcount,
+                "address": address,
+                "meetDetail": meetDetail,
+                "tags": tag_arr,
+                "lat": lat,
+                "lng": lng,
+                "done": done
+            }
+
+            if meet_profile:  # form에서 넘어온 profile 값이 있다면
+                f.save(
+                    './static/meet_profile/' + secure_filename(
+                        meet_profile))  # 모임 프로필 이미지 파일 저장 (경로: static/meet_profile/)
+                doc.update({'meet_profile': meet_profile})
+                session['meet_profile'] = './static/meet_profile/' + meet_profile
+
+            # user테이블에서 모임장의 meeting에 새로 만든 모임 추가 (배열에 값을 추가할 때는 $push 사용)
+            user_collect.update_one({'userid': session['userid']}, {'$push': {"meeting": meet_name}})
+            # document 삽입
+            collect.insert_one(doc)
+
+            redirect(url_for('my_page'))
+        # GET일 경우
+        return render_template('makemeet.html')
     else:
         return redirect('/login')
 
@@ -277,7 +360,7 @@ def make_notice():
 @app.route('/meetadmin')
 def meet_admin():
     if 'userid' in session:  # 로그인 여부 확인
-        return render_template('meetpage.html')
+        return render_template('meetadmin.html')
     else:
         return redirect('/login')
 
@@ -305,7 +388,7 @@ def delete(id=None):
     else:  # 로그인 안되어 있을 경우
         return redirect('/login')
 
-
+#
 @app.route('/edit/<id>', methods=['GET', 'POST']) #게시판 or 공지사항에 작성된 글 읽기 페이지
 def edit(id=None):
     if 'userid' in session:  # 로그인 여부 확인
@@ -375,7 +458,7 @@ def google_auth():
     print(" Google User ", user)
     return redirect('/')
 
-# POST API(모임 목록 조회)
+# GET API(모임 목록 조회)
 @app.route('/meeting_read', methods=['GET'])
 def meeting_read():
     read = db.meetings.find()
@@ -384,11 +467,36 @@ def meeting_read():
         meetList.append(result)
     return jsonify(meetList)
 
+# POST API(참여 요청)
+@app.route('/meeting_join', methods=['GET', 'POST'])
+def meeting_join():    # value는 card_title(제목)이 넘어옴
+    title = request.args.get('card_title')
+    user_id = request.args.get('user_id')
+    print(user_id + " 유저로부터 '" + title + "' 스터디 참여 요청 받음")
+    meetings = db.meetings.find()
+
+    # print(meetings[0]['study_title'])
+
+    for result in meetings:
+        if(result['study_title'] == title):
+            # print("찾았다! "+result['tag_id'])
+            pass
+
+    return "success"
+
 # POST API(모임 등록)
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
     db.meetings.insert_one(data)
+
+    return jsonify(result = "success", result2 = data)
+
+# POST API(모임 상세 보기)
+@app.route('/detail_meet', methods=['POST'])
+def detail_meet():
+    data = request.get_json()
+
 
     return jsonify(result = "success", result2 = data)
 

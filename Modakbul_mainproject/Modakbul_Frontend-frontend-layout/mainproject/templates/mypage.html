@@ -197,6 +197,126 @@
         text-align: left;
     }
 
+    /*popup*/
+    .popup_layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    /*팝업 박스*/
+    .popup_box {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        overflow: auto;
+        height: 600px;
+        width: 375px;
+        transform: translate(-50%, -50%);
+        z-index: 1002;
+        box-sizing: border-box;
+        background: #fff;
+        box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.35);
+        -webkit-box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.35);
+        -moz-box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.35);
+    }
+
+    /*컨텐츠 영역*/
+    .popup_box .popup_cont {
+        padding: 50px;
+        line-height: 1.4rem;
+        font-size: 14px;
+    }
+
+    .popup_box .popup_cont h2 {
+        padding: 15px 0;
+        color: #333;
+        margin: 0;
+    }
+
+    .popup_box .popup_cont p {
+        border-top: 1px solid #666;
+        padding-top: 30px;
+    }
+
+    /*버튼영역*/
+    .popup_box .popup_btn {
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+        height: 70px;
+        background: #ECECEC;
+        word-break: break-word;
+    }
+
+    .popup_box .popup_btn a {
+        position: relative;
+        display: table-cell;
+        height: 70px;
+        font-size: 17px;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        background: #ECECEC;
+    }
+
+    .popup_box .popup_btn a:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 26px;
+        right: 29px;
+        width: 1px;
+        height: 21px;
+        background: #fff;
+        -moz-transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    .popup_box .popup_btn a:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 26px;
+        right: 29px;
+        width: 1px;
+        height: 21px;
+        background: #fff;
+        -moz-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .popup_box .popup_btn a.close_day {
+        background: #5d5d5d;
+    }
+
+    .popup_box .popup_btn a.close_day:before, .popup_box .popup_btn a.close_day:after {
+        display: none;
+    }
+
+    /*오버레이 뒷배경*/
+    .popup_overlay {
+        position: fixed;
+        top: 0px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1001;;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    /*popup*/
+
 
 </style>
 <body>
@@ -209,6 +329,8 @@
                <input type="submit" value="src">
            </form></div>
            <button class="mypageBt"><a href="/mypage">mypage</a></button>
+           <button class="meetadminBt"><a href="/meetadmin">meet admin</a></button>
+
            </nav>
         </header>
             <div class="myPage container">
@@ -219,10 +341,10 @@
                         <img src="{{session['profile']}}" width="150px"; height="150px;" style="border-radius: 50%;">
                     {% endif %}
                </div>
-                <h2 class="listTitle">{{session['username']}}</h2>
+                <h2 class="listTitle" id="user_name1">{{session['username']}}</h2>
                                <h4 style="display:none" id="user_id1">{{ session['userid'] }}</h4>
                 <div class="level">Lv. 00</div>
-                <button class="makeMeet">모임만들기</button>
+                <button class="makeMeet" onclick="openPop()">모임만들기</button>
                 <ul class="sideOptions">
                <li><a href="/pfedit">프로필 수정</a></li>
                     <li><a href="/mymeets">내 모임</a></li>
@@ -315,11 +437,13 @@
                         </select>
                         </p>
                         <p>
-                            태그
+                            태그 입력
                         </p>
-                        <textarea id="tag_id1" placeholder="태그 입력">
-
-                        </textarea>
+                        <textarea id="tag_id1" placeholder="태그"></textarea>
+                        <p>
+                            스터디 제목 입력
+                        </p>
+                        <textarea id="title_id1" placeholder="제목"></textarea>
                         <input type="button" id="register" value="모임 등록">
 
                     </div>
@@ -353,6 +477,7 @@
                     let study_id = $("#study_id1").val();
                     let members_id = $("#members_id1").val();
                     let tag_id = $("#tag_id1").val();
+                    let title_id = $("#title_id1").val();
                     let user_id = $("#user_id1").html();
                     let user_name = $("#user_name1").html();
                     alert(user_name);
@@ -361,7 +486,8 @@
                         "members_id": members_id,
                         "tag_id": tag_id,
                         "leader_id": user_id,
-                        "leader_name": user_name
+                        "leader_name": user_name,
+                        "study_title": title_id
                     }
                     $.ajax({
                         type: 'POST',
@@ -371,7 +497,7 @@
                         contentType: "application/json",
                         success: function (data) {
                             alert('성공! 데이터 값:' + data.result2["study_id"] + " " + data.result2["members_id"]
-                                + " " + data.result2["tag_id"])
+                                + " " + data.result2["tag_id"] + " " + data.result2["study_title"])
                         },
                         error: function (request, status, error) {
                             alert('ajax 통신 실패')
@@ -379,6 +505,34 @@
                         }
                     })
                 })
+
+
+               // 모임 상세 보기 버튼 - 제목 값 넘겨주는 함수
+               function meetdetail (title) {
+
+                    let user_id = $("#user_id1").html();
+                    alert(title);
+                    alert(user_id);
+
+                    let postdata = {
+                        "leader_id": user_id,
+                        "study_title": title
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: "/detail_meet",
+                        data: JSON.stringify(postdata),
+                        dataType: 'JSON',
+                        contentType: "application/json",
+                        success: function (data) {
+                            alert('meet admin으로 넘겨주기 성공! 데이터 값:' + data.result2["leader_id"] + data.result2["study_title"])
+                        },
+                        error: function (request, status, error) {
+                            alert('ajax 통신 실패')
+                            alert(error);
+                        }
+                    })
+                }
 
 
                 // 모임 목록 조회
@@ -394,11 +548,13 @@
                                 if (response[i].leader_id == user_id) {
                                     document.getElementById('mycard').innerHTML += "<li class='card'>" + "태그 : " + response[i].tag_id +
                                         "<br>" + "인원 수 : " + response[i].members_id + "<br>" + "분류 : " +
-                                        response[i].study_id + "<br>" + "모임장 : " + response[i].leader_name + "</li>";
+                                        response[i].study_id + "<br>" + "모임장 : " + response[i].leader_name + "<br>" +
+                                        "스터디 제목 : " + response[i].study_title + "<br>" + "<button onclick='meetdetail(" + "this.value" + ")' id = mttest1 class = 'meetdetail' value=" + response[i].study_title + "><a href=''>모임 관리</a></button>" + "</li>";
                                 } else {
                                     document.getElementById('joincard').innerHTML += "<li class='card'>" + "태그 : " + response[i].tag_id +
                                         "<br>" + "인원 수 : " + response[i].members_id + "<br>" + "분류 : " +
-                                        response[i].study_id + "<br>" + "모임장 : " + response[i].leader_name + "</li>";
+                                        response[i].study_id + "<br>" + "모임장 : " + response[i].leader_name + "<br>" +
+                                        "스터디 제목 : " + response[i].study_title + "</li>";
                                 }
                             }
 
