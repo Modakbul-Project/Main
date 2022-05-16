@@ -344,7 +344,7 @@
                 <h2 class="listTitle" id="user_name1">{{session['username']}}</h2>
                                <h4 style="display:none" id="user_id1">{{ session['userid'] }}</h4>
                 <div class="level">Lv. 00</div>
-                <button class="makeMeet" onclick="openPop()">모임만들기</button>
+                <button class="makeMeet"><a href="makemeet">모임만들기</a></button>
                 <ul class="sideOptions">
                <li><a href="/pfedit">프로필 수정</a></li>
                     <li><a href="/mymeets">내 모임</a></li>
@@ -525,7 +525,7 @@
                         dataType: 'JSON',
                         contentType: "application/json",
                         success: function (data) {
-                            alert('meet admin으로 넘겨주기 성공! 데이터 값:' + data.result2["leader_id"] + data.result2["study_title"])
+                            alert('meet admin으로 넘겨주기 성공! 데이터 값:' + data.result2["leader_id"] + data.result2["meet_name"])
                         },
                         error: function (request, status, error) {
                             alert('ajax 통신 실패')
@@ -546,15 +546,16 @@
                             let user_id = $("#user_id1").html();
                             for (let i = 0; i < response.length; i++) {
                                 if (response[i].leader_id == user_id) {
-                                    document.getElementById('mycard').innerHTML += "<li class='card'>" + "태그 : " + response[i].tag_id +
-                                        "<br>" + "인원 수 : " + response[i].members_id + "<br>" + "분류 : " +
-                                        response[i].study_id + "<br>" + "모임장 : " + response[i].leader_name + "<br>" +
-                                        "스터디 제목 : " + response[i].study_title + "<br>" + "<button onclick='meetdetail(" + "this.value" + ")' id = mttest1 class = 'meetdetail' value=" + response[i].study_title + "><a href=''>모임 관리</a></button>" + "</li>";
+                                    document.getElementById('mycard').innerHTML += "<li class='card'>" + "위치 : " + response[i].location +
+                                        "<br>" + "인원 수 : " + response[i].headcount + "<br>" + "분류 : " +
+                                        response[i].category + "<br>" + "모임장 : " + response[i].leader_id + "<br>" +
+                                        "스터디 제목 : " + response[i].meet_name + "<br>" +
+                                        "<button onclick='meetdetail(" + "this.value" + ")' id = mttest1 class = 'meetdetail' value=" + response[i].meet_name + "><a href='meetadmin'>모임 관리</a></button>" + "</li>";
                                 } else {
-                                    document.getElementById('joincard').innerHTML += "<li class='card'>" + "태그 : " + response[i].tag_id +
-                                        "<br>" + "인원 수 : " + response[i].members_id + "<br>" + "분류 : " +
-                                        response[i].study_id + "<br>" + "모임장 : " + response[i].leader_name + "<br>" +
-                                        "스터디 제목 : " + response[i].study_title + "</li>";
+                                    document.getElementById('joincard').innerHTML += "<li class='card'>" + "위치 : " + response[i].location +
+                                        "<br>" + "인원 수 : " + response[i].headcount + "<br>" + "분류 : " +
+                                        response[i].category + "<br>" + "모임장 : " + response[i].leader_id + "<br>" +
+                                        "스터디 제목 : " + response[i].meet_name + "</li>";
                                 }
                             }
 

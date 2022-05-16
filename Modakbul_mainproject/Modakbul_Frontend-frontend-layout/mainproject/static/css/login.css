@@ -1,0 +1,68 @@
+@charset "utf-8";
+
+ .contents{
+        background-color:aliceblue;
+        display:flex;
+        align-items:center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .loginBox{
+        
+        padding:3rem;
+        border: 1px solid gray;
+        border-radius: 10px;
+        background-color: white;
+        text-align: center;
+    }
+
+    .loginBox .logo{
+        display: inline-block;
+        margin-bottom: 50px;
+    }
+
+    .loginBox .formWrap{
+        width: 100%;
+
+    }
+
+    .loginBox form input{
+        margin:0;
+        padding: 0;
+        border:1px solid lightgray;
+        height:2rem;
+        display: block;
+        width: 99.4%;
+    }
+
+    .loginBox form input:last-child, .loginBox .oauth{
+        margin: 0;
+        border: 1px solid lightblue;
+        background-color: aliceblue;
+        width:100%;
+        height:3rem;
+    }
+
+    .loginBox .oauth{
+        background-color: lightblue;
+    }
+
+    .loginOptions ul{
+        margin: 0;
+        padding: 1rem;
+    }
+
+    .loginOptions li{
+        margin: 0;
+        padding-left: 0;
+        display: inline-block;
+    }
+
+    .loginOptions li:nth-child(n+2)::before{
+        display: inline-block;
+        content: '';
+        width:1px;
+        height:12px;
+        background-color: gainsboro;
+    }

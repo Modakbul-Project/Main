@@ -1,0 +1,141 @@
+@charset "utf-8";
+
+    html,body{
+        width:100%;
+        height:100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .detailsBg {
+        width:100%;
+        height:100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .detailsBg{
+        background: rgba(255, 255, 255, 0.5);
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top:0;
+        z-index: 100;
+    }
+
+    .detailsWrap{
+        max-width: 450px;
+        width:80%;
+        height:80%;
+        background-color: white;
+        border:1px solid lightgray;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        padding:2rem;
+    }
+
+    .detailTitle{
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    .detailTitle .meetPic{
+        width:50px;
+        height:50px;
+        background-color: gainsboro;
+        border-radius: 50%;
+    }
+
+    .detailTitle h2{
+        margin: 0;
+        padding: 0;
+        margin-left: 10px;
+    }
+
+    .detailTitle span{
+        margin-left:10px;
+        padding-top: 10px;
+    }
+
+    .detailTags ul{
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+    }
+
+    .detailTags #bigTag li{
+        padding:10px 20px;
+        margin-right: 5px;
+        background-color: gainsboro;
+        border-radius: 50px;
+    }
+
+    .detailTags #smallTag li{
+        padding: 10px;
+        font-size: 0.1rem;
+    }
+
+    .detailTags #smallTag li::before{
+        content: "# ";
+        font-weight: bold;
+        font-size: 0.8rem;
+    }
+
+    .detailContents{
+        flex:1;
+        border: 1px solid lightgray;
+        overflow-y: scroll;
+    }
+
+    .detailContents img{
+        max-width:100%;
+    }
+
+    .detailFooter{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 1rem;
+    }
+
+    #numPeople{
+        font-size: 0.8rem;
+        font-weight: bold;
+        color:darkslategray;
+    }
+
+    #numPeople span:nth-child(1){
+        font-size: 1.5rem;
+    }
+
+    #numPeople span:nth-child(2){
+        font-size: 1rem;
+    }
+
+    #numPeople span:nth-child(3){
+        font-size: 1rem;
+    }
+
+    .detailFooter button{
+        border: 0;
+        color:white;
+        background-color: gray;
+        font-weight: bold;
+        padding:10px 40px;
+        border-radius: 50px;
+    }
+
+    .detailTitle button{
+        position: absolute;
+        right:0;
+        top:0;
+        background: 0;
+        border: 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }

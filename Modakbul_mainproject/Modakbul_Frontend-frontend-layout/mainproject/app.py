@@ -1,3 +1,4 @@
+import pymongo
 from flask import Flask, render_template, request, redirect, session, \
     url_for, json, session, flash, jsonify
 from authlib.integrations.flask_client import OAuth
@@ -9,14 +10,14 @@ from werkzeug.utils import secure_filename
 
 now = datetime.now()
 
-app = Flask(__name__) #플라스크 애플리케이션 생성, name=모듈명=pybo.py
-app.config['SECRET_KEY']=os.urandom(12)
+app = Flask(__name__)  # 플라스크 애플리케이션 생성, name=모듈명=pybo.py
+app.config['SECRET_KEY'] = os.urandom(12)
 app.config['GOOGLE_OAUTH2_CLIENT_SECRETS_FILE'] = './static/client_secret_.json'
-app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=60) # 로그인 지속시간을 정합니다. 60분(1시간)
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=60)  # 로그인 지속시간을 정합니다. 60분(1시간)
 
 oauth = OAuth(app)
 with open('/Users/imin-u/Downloads/Modakbul_Backend-minwoo 2/Modakbul_Backend-minwoo/static/client_secret.json') as f:
-    json_data=json.load(f)
+    json_data = json.load(f)
 
 
 # json 시리얼 오류 처리용 인코더
@@ -25,6 +26,7 @@ class MyEncoder(json.JSONEncoder):
         if isinstance(obj, ObjectId):
             return str(obj)
         return super(MyEncoder, self).default(obj)
+
 
 app.json_encoder = MyEncoder
 
@@ -43,6 +45,7 @@ def main():
     results = collect.find()
     return render_template('main.html', data=results)
 
+
 @app.route('/')
 def test():
     if 'userid' in session:
@@ -51,6 +54,7 @@ def test():
         print('no login')
 
     return render_template('main.html')
+
 
 @app.route('/find_pw', methods=['GET', 'POST'])
 def find_pw():
@@ -94,17 +98,18 @@ def find_id():
         # 회원정보가 db에 있는지 검색
         result = list(collect.find({'username': username, 'email': email, 'phone': phone}))
 
-        if result: #회원 정보가 있을 때
+        if result:  # 회원 정보가 있을 때
             userid = result[0]['userid']
-            msg = username+"님의 아이디는 "+userid+"입니다."
-            flash(msg) #리턴할 때 같이 넘겨줄 메시지
+            msg = username + "님의 아이디는 " + userid + "입니다."
+            flash(msg)  # 리턴할 때 같이 넘겨줄 메시지
             return redirect(url_for('login'))
-        else: #회원정보가 없을 때
+        else:  # 회원정보가 없을 때
             msg = "회원정보와 일치하는 아이디가 없습니다."
             flash(msg)  # 리턴할 때 같이 넘겨줄 메시지
             return redirect(url_for('find_id'))
-    #GET일 경우
+    # GET일 경우
     return render_template('find_id.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -112,14 +117,14 @@ def login():
         # collection 생성
         collect = db.mongoUser
 
-        #폼에서 ID/PW 가져오기
+        # 폼에서 ID/PW 가져오기
         userid = request.form['id']
         password = request.form['password']
 
         # 폼에서 입력받은 userid와 password값이 있는지 db에서 조회
         result = list(collect.find({'userid': userid, 'password': password}))
 
-        #userid와 password값이 db에 있다면 세션에 값입력
+        # userid와 password값이 db에 있다면 세션에 값입력
         if result:
             username = result[0]['username']
             profile = "./static/user.png"
@@ -128,12 +133,13 @@ def login():
             session['username'] = username
             session['profile'] = profile
             return redirect(url_for('main'))
-        else: #userid와 password값이 db에 없을 경우 (id 또는 pw가 틀렸을 경우)
+        else:  # userid와 password값이 db에 없을 경우 (id 또는 pw가 틀렸을 경우)
             msg = "아이디와 비밀번호를 다시 확인해주세요"
-            flash(msg) #리턴할 때 같이 넘겨줄 메시지
+            flash(msg)  # 리턴할 때 같이 넘겨줄 메시지
             redirect(url_for('login'))
-    #GET일 경우
+    # GET일 경우
     return render_template('login.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -173,25 +179,26 @@ def signup():
         # userid가 중복될 경우 다시 signup페이지로 이동
         else:
             msg = "이미 존재하는 아이디입니다."
-            flash(msg) #리턴할 때 같이 넘겨줄 메시지
+            flash(msg)  # 리턴할 때 같이 넘겨줄 메시지
             return redirect(url_for('signup'))
     else:  # 메소드가 GET일 경우
         return render_template('signup.html')
 
-@app.route('/notice/<id>') #게시판 or 공지사항에 작성된 글 읽기 페이지
+
+@app.route('/notice/<id>')  # 게시판 or 공지사항에 작성된 글 읽기 페이지
 def notice(id=None):
     if 'userid' in session:  # 로그인 여부 확인
         # collection 생성
         collect = db.mongoBoard
-        #db에서 id와 일치하는 글 검색
+        # db에서 id와 일치하는 글 검색
         result = list(collect.find({'_id': ObjectId(id)}))
         result = result[0]
         return render_template('read.html', data=result)
-    else: #로그인 안되어 있을 경우
+    else:  # 로그인 안되어 있을 경우
         return redirect('/login')
 
 
-@app.route('/write', methods=['GET', 'POST']) #게시판 or 공지사항 글쓰기 페이지
+@app.route('/write', methods=['GET', 'POST'])  # 게시판 or 공지사항 글쓰기 페이지
 def write():
     if 'userid' in session:  # 로그인 여부 확인
         if request.method == "POST":
@@ -218,14 +225,16 @@ def write():
             return redirect(url_for('meet_page'))
         # GET일 경우
         return render_template('write.html')
-    else: #로그인 안되어 있을 경우
+    else:  # 로그인 안되어 있을 경우
         return redirect('/login')
+
 
 @app.route('/logout')
 def logout():
-    #세션에서 값 삭제
+    # 세션에서 값 삭제
     session.pop('userid', None)
     return redirect(url_for('main'))
+
 
 @app.route('/mypage')
 def my_page():
@@ -234,12 +243,14 @@ def my_page():
     else:
         return redirect('/login')
 
+
 @app.route('/mymeets')
 def my_meets():
     if 'userid' in session:  # 로그인 여부 확인
         return render_template('mymeet.html')
     else:
         return redirect('/login')
+
 
 @app.route('/pfedit', methods=['GET', 'POST'])
 def profile_edit():
@@ -276,6 +287,7 @@ def profile_edit():
     else:
         return redirect('/login')
 
+
 @app.route('/meetpage')
 def meet_page():
     if 'userid' in session:  # 로그인 여부 확인
@@ -287,6 +299,7 @@ def meet_page():
         return render_template('meetpage.html', data=results)
     else:
         return redirect('/login')
+
 
 @app.route('/makemeet', methods=['GET', 'POST'])
 def make_meet():
@@ -310,6 +323,7 @@ def make_meet():
             lat = request.form["lat"]
             lng = request.form["lng"]
             userid = session['userid']
+            waiting = []
             done = False  # 모집중-(done: False), 모집완료-(done: True)
 
             tag_arr = tags.split('#')  # 태그들이 저장된 배열
@@ -328,7 +342,8 @@ def make_meet():
                 "tags": tag_arr,
                 "lat": lat,
                 "lng": lng,
-                "done": done
+                "done": done,
+                "waiting": waiting
             }
 
             if meet_profile:  # form에서 넘어온 profile 값이 있다면
@@ -357,12 +372,15 @@ def make_notice():
     else:
         return redirect('/login')
 
+
 @app.route('/meetadmin')
 def meet_admin():
     if 'userid' in session:  # 로그인 여부 확인
-        return render_template('meetadmin.html')
+        meetings = db.mongoMeeting
+        return render_template('meetadmin.html', data = meetings)
     else:
         return redirect('/login')
+
 
 @app.route('/profile')
 def profile():
@@ -371,32 +389,33 @@ def profile():
     else:
         return redirect('/login')
 
+
 @app.route('/delete/<id>')
 def delete(id=None):
     if 'userid' in session:  # 로그인 여부 확인
         # collection 생성
         collect = db.mongoBoard
-        #db에서 id와 일치하는 글 검색
+        # db에서 id와 일치하는 글 검색
         result = list(collect.find({'_id': ObjectId(id)}))
-        if result[0]['userid'] == session['userid']: #작성자와 로그인한 사용자가 일치하면
-            collect.delete_one({'_id': ObjectId(id)}) #해당 게시글 삭제
+        if result[0]['userid'] == session['userid']:  # 작성자와 로그인한 사용자가 일치하면
+            collect.delete_one({'_id': ObjectId(id)})  # 해당 게시글 삭제
             return redirect(url_for('meet_page'))
-        else: #작성자와 로그인한 사용자가 일치하지 않으면
+        else:  # 작성자와 로그인한 사용자가 일치하지 않으면
             msg = "삭제 권한이 없습니다."
             flash(msg)  # 리턴할 때 같이 넘겨줄 메시지
-            return redirect('/notice/'+id)
+            return redirect('/notice/' + id)
     else:  # 로그인 안되어 있을 경우
         return redirect('/login')
 
+
 #
-@app.route('/edit/<id>', methods=['GET', 'POST']) #게시판 or 공지사항에 작성된 글 읽기 페이지
+@app.route('/edit/<id>', methods=['GET', 'POST'])  # 게시판 or 공지사항에 작성된 글 읽기 페이지
 def edit(id=None):
     if 'userid' in session:  # 로그인 여부 확인
         # collection 생성
         collect = db.mongoBoard
 
         if request.method == "POST":
-
             # form에서 가져온 데이터들
             notice = request.form["notice"]
             title = request.form["title"]
@@ -417,18 +436,19 @@ def edit(id=None):
             return redirect(url_for('meet_page'))
 
         # GET일 경우
-        #db에서 id와 일치하는 글 검색
+        # db에서 id와 일치하는 글 검색
         result = list(collect.find({'_id': ObjectId(id)}))
-        if result[0]['userid'] == session['userid']: #작성자와 로그인한 사용자가 일치하면
+        if result[0]['userid'] == session['userid']:  # 작성자와 로그인한 사용자가 일치하면
             result = result[0]
             return render_template('edit.html', data=result)
-        else: #작성자와 로그인한 사용자가 일치하지 않으면
+        else:  # 작성자와 로그인한 사용자가 일치하지 않으면
             msg = "수정 권한이 없습니다."
             flash(msg)  # 리턴할 때 같이 넘겨줄 메시지
-            return redirect('/notice/'+id)
+            return redirect('/notice/' + id)
 
-    else: #로그인 안되어 있을 경우
+    else:  # 로그인 안되어 있을 경우
         return redirect('/login')
+
 
 @app.route('/google/')
 def google():
@@ -449,6 +469,7 @@ def google():
     print(redirect_uri)
     return oauth.google.authorize_redirect(redirect_uri)
 
+
 @app.route('/google/auth/')
 def google_auth():
     token = oauth.google.authorize_access_token()
@@ -458,31 +479,55 @@ def google_auth():
     print(" Google User ", user)
     return redirect('/')
 
+
 # GET API(모임 목록 조회)
 @app.route('/meeting_read', methods=['GET'])
 def meeting_read():
-    read = db.meetings.find()
+    read = db.mongoMeeting.find()
     meetList = list()
     for result in read:
         meetList.append(result)
     return jsonify(meetList)
 
+
 # POST API(참여 요청)
 @app.route('/meeting_join', methods=['GET', 'POST'])
-def meeting_join():    # value는 card_title(제목)이 넘어옴
+def meeting_join():  # value는 card_title(제목)이 넘어옴
     title = request.args.get('card_title')
-    user_id = request.args.get('user_id')
-    print(user_id + " 유저로부터 '" + title + "' 스터디 참여 요청 받음")
-    meetings = db.meetings.find()
-
+    user_name = request.args.get('user_name')
+    print(user_name + " 유저로부터 '" + title + "' 스터디 참여 요청 받음")
+    meetings = db.mongoMeeting.find()
+    meetcol = db.mongoMeeting
+    meet_id = ""
     # print(meetings[0]['study_title'])
+    waitings = list()
 
-    for result in meetings:
-        if(result['study_title'] == title):
-            # print("찾았다! "+result['tag_id'])
-            pass
+    print(pymongo.version)
+    find = db.mongoMeeting.find_one({"meet_name": title})
+    print(find)
+    find['waiting'].append(user_name)
+    print(find['waiting'])
+
+    for m in find['waiting']:
+        if(m!=user_name):
+            db.mongoMeeting.update_one({"meet_name": title}, {"$set":
+                {
+                    "waiting" : find['waiting']
+                }
+            })
+
+    # for result in meetings:
+    #     if(result['meet_name'] == title):
+    #         # print("찾았다! "+result['meet_title'])
+    #         print(type(result))
+    #         result['waiting'].append(user_name)
+    #         print(result['waiting'][0])
+    #         meet_id = result["_id"]
+    #         print(meet_id)
+    #         meetcol.update_one({"_id":meet_id},{"$set":{"waiting":result['waiting']}})
 
     return "success"
+
 
 # POST API(모임 등록)
 @app.route('/register', methods=['POST'])
@@ -490,15 +535,16 @@ def register():
     data = request.get_json()
     db.meetings.insert_one(data)
 
-    return jsonify(result = "success", result2 = data)
+    return jsonify(result="success", result2=data)
+
 
 # POST API(모임 상세 보기)
 @app.route('/detail_meet', methods=['POST'])
 def detail_meet():
     data = request.get_json()
 
+    return jsonify(result="success", result2=data)
 
-    return jsonify(result = "success", result2 = data)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

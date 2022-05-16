@@ -1,0 +1,76 @@
+    .sub, .members{
+        width:100%;
+    }
+    .meetBoard h2{
+        text-align: left;
+        padding: 2rem;
+        margin: 0;
+    }
+
+    .profileList{
+        display: flex;
+    }
+
+    .profileList .subProfile{
+        padding-left: 2rem;
+        text-align: center;
+    }
+
+    .subProfile .profilePic{
+        position: relative;
+        display: inline-block;
+        background-color:gray;
+        width:100px;
+        height:100px;
+        border-radius: 50%;
+    }
+
+    .subProfile .subName{
+        margin-top: 0.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .subProfile .subLv{
+        font-size:0.5rem;
+        color:gray;
+    }
+
+    .subProfile button{
+        border: 0;
+        border-radius: 50px;
+        width:48px;
+        height:2rem;
+        margin-top: 0.5rem;
+        color:white;
+    }
+
+    .subProfile button:nth-of-type(1){
+        margin-right: 5px;
+        background-color: gray;
+    }
+
+    .subProfile button:nth-of-type(2){
+        background-color: limegreen;
+    }
+
+    .meetBoard #toggleBt{
+        background-color: aquamarine;
+        display:inline-block;
+        position: absolute;
+        bottom:0;
+        right: 0;
+        margin: 10px;
+    }
+
+    .noticeAdmin{
+        display: inline-block;
+        
+    }
+
+    .noticeAdmin span{
+        cursor: pointer;
+        font-size: 9pt;
+        color:gray;
+        text-decoration-line: underline;
+    }

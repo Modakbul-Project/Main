@@ -636,19 +636,19 @@
                 let user_id = $("#user_id1").html();
                 for (let i = 0; i < response.length; i++) {
                     if (response[i].leader_id != user_id) {
-                        document.getElementById('card_list').innerHTML += "<li class='card'>" +
-                            "태그 : " + response[i].tag_id + "<br>" + "인원 수 : " + response[i].members_id +
-                            "<br>" + "분류 : " + response[i].study_id + "<br>" + "모임장 : " +
-                            response[i].leader_name + "<br>" + "스터디 제목 : " + response[i].study_title +
-                            "<br>" + "<button value="+ i + " class='" + "card_button" + "' + >" +
+                        document.getElementById('card_list').innerHTML += "<li class='card'>" + "위치 : " + response[i].location +
+                            "<br>" + "인원 수 : " + response[i].headcount + "<br>" + "분류 : " +
+                            response[i].category + "<br>" + "모임장 : " + response[i].leader_id + "<br>" +
+                            "스터디 제목 : " + response[i].meet_name + "<br>" +
+                            "<button value=" + i + " class='" + "card_button" + "' + >" +
                             "상세보기" + "</button>" + "</li>";
 
                         $(".card_button").click(function () {
                             $(".detailsBg").show();
-                            document.getElementById('card_title').innerHTML = response[this.value].study_title;
-                            document.getElementById('card_tag').innerHTML = response[this.value].tag_id;
-                            document.getElementById('card_memberMax').innerHTML = response[this.value].members_id;
-                            document.getElementById('card_joinButton').value = response[this.value].study_title;
+                            document.getElementById('card_title').innerHTML = response[this.value].meet_name;
+                            document.getElementById('card_tag').innerHTML = response[this.value].tags[1];
+                            document.getElementById('card_memberMax').innerHTML = response[this.value].headcount;
+                            document.getElementById('card_joinButton').value = response[this.value].meet_name;
                             //this통해 검색, 받아와서 보여주기, 주소창에 정보 띄울 것!(주소로 카드 접근 가능하도록)
                         })
                     }
@@ -664,12 +664,12 @@
 
     function meeting_join(title) {
         alert(title);
-        let user_id = $("#user_id1").html();
-        alert(user_id)
+        let user_name = $("#user_name1").html();
+        alert(user_name)
         $.ajax({
             type: "GET",
             url: "/meeting_join",
-            data: {card_title : title, user_id : user_id},
+            data: {card_title: title, user_name: user_name},
             success: function (response) {
                 console.log(response);
 
