@@ -34,11 +34,11 @@
 
 
 ### 2.2 개발 도구
-![pc](https://user-imag 
-![fla](https://user-images.githubusercontent.com/57788781/170711491-7b035a1d-07e2-47fc-9249-4d4ec4da2e89.png)
-es.githubusercontent.com/57788781/170711476-c6fa9ea5-c35a-4709-be9e-360adf0b6040.jpeg)
-![mongo](https://user-images.githubusercontent.com/57788781/170711534-7c92afd7-82f3-496a-9aa9-04c39bea61a3.png)
-![aws](https://user-images.githubusercontent.com/57788781/170711550-5bc15451-4132-44e0-8668-9ba122d00702.png)
+![pc](https://user-images.githubusercontent.com/57788781/170711652-47508cab-da41-4439-8037-afdb1d403364.jpeg)
+![fla](https://user-images.githubusercontent.com/57788781/170711664-344f722a-7dec-47a3-906b-7385cbdc3d3d.png)
+![mongo](https://user-images.githubusercontent.com/57788781/170711677-890ee025-93aa-4df3-86fe-1bcce17f7ddb.png)
+![aws](https://user-images.githubusercontent.com/57788781/170711686-bdb5b2a9-37a5-4e11-ada4-2f9ef2ec8bf1.png)
+
 
 
 
