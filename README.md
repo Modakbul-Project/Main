@@ -34,10 +34,10 @@
 
 
 ### 2.2 개발 도구
-![pc](https://user-images.githubusercontent.com/57788781/170712353-49c92851-e3de-4b61-839a-a557322d27a4.jpeg) &nbsp;
-![fla](https://user-images.githubusercontent.com/57788781/170712359-9d6a48c8-f16a-4fb1-84be-be733a1ad1ca.png) &nbsp;
-![mongo](https://user-images.githubusercontent.com/57788781/170712369-acf8ad02-b8c2-4e3d-9269-881945741f18.png) &nbsp;
-![aws](https://user-images.githubusercontent.com/57788781/170712375-c196dffb-6617-4188-b13b-68e6536dbe1d.png) &nbsp;
+![pc](https://user-images.githubusercontent.com/57788781/170712353-49c92851-e3de-4b61-839a-a557322d27a4.jpeg) &nbsp;&nbsp;&nbsp;
+![fla](https://user-images.githubusercontent.com/57788781/170712359-9d6a48c8-f16a-4fb1-84be-be733a1ad1ca.png) &nbsp;&nbsp;&nbsp;
+![mongo](https://user-images.githubusercontent.com/57788781/170712369-acf8ad02-b8c2-4e3d-9269-881945741f18.png) &nbsp;&nbsp;&nbsp;
+![aws](https://user-images.githubusercontent.com/57788781/170712375-c196dffb-6617-4188-b13b-68e6536dbe1d.png) &nbsp;&nbsp;&nbsp;
 
 
 ### 2.3 프로젝트 예시
