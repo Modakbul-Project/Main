@@ -32,4 +32,14 @@
 
 ![image](https://user-images.githubusercontent.com/57788781/170709837-bb4ce0f7-1c4b-4ed9-afb3-3c568e5c8b74.png)
 
-### 2.2 프로젝트 예시
+
+### 2.2 개발 도구
+![pc](https://user-imag 
+![fla](https://user-images.githubusercontent.com/57788781/170711491-7b035a1d-07e2-47fc-9249-4d4ec4da2e89.png)
+es.githubusercontent.com/57788781/170711476-c6fa9ea5-c35a-4709-be9e-360adf0b6040.jpeg)
+![mongo](https://user-images.githubusercontent.com/57788781/170711534-7c92afd7-82f3-496a-9aa9-04c39bea61a3.png)
+![aws](https://user-images.githubusercontent.com/57788781/170711550-5bc15451-4132-44e0-8668-9ba122d00702.png)
+
+
+
+### 2.3 프로젝트 예시
