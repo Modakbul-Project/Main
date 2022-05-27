@@ -34,12 +34,10 @@
 
 
 ### 2.2 개발 도구
-![pc](https://user-images.githubusercontent.com/57788781/170711652-47508cab-da41-4439-8037-afdb1d403364.jpeg)
-![fla](https://user-images.githubusercontent.com/57788781/170711664-344f722a-7dec-47a3-906b-7385cbdc3d3d.png)
-![mongo](https://user-images.githubusercontent.com/57788781/170711677-890ee025-93aa-4df3-86fe-1bcce17f7ddb.png)
-![aws](https://user-images.githubusercontent.com/57788781/170711686-bdb5b2a9-37a5-4e11-ada4-2f9ef2ec8bf1.png)
-
-
+![pc](https://user-images.githubusercontent.com/57788781/170712353-49c92851-e3de-4b61-839a-a557322d27a4.jpeg)
+![fla](https://user-images.githubusercontent.com/57788781/170712359-9d6a48c8-f16a-4fb1-84be-be733a1ad1ca.png)
+![mongo](https://user-images.githubusercontent.com/57788781/170712369-acf8ad02-b8c2-4e3d-9269-881945741f18.png)
+![aws](https://user-images.githubusercontent.com/57788781/170712375-c196dffb-6617-4188-b13b-68e6536dbe1d.png)
 
 
 ### 2.3 프로젝트 예시
