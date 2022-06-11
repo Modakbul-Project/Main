@@ -1,0 +1,86 @@
+<head>
+    <script src="{{ url_for('static', filename='jquery.mousewheel.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/cardscroll.js') }}"></script>
+    <link rel="stylesheet" href="static/css/mypage_meetcard.css">
+
+</head>
+<body>
+<div class="contents conatainer">
+    <div class="category">
+        <h3 class="ListTitle">내 모임</h3>
+
+    </div>
+
+    <div class="cardContainer">
+        <div class="cards makeSelf">
+            <ul>
+
+                <!--내 모임 이 부분에 <li>로 모임 카드들 추가됨-->
+                {% for i in  meetInfo %}
+                    {% if i[0].leader_id == session['userid'] %}
+                        <li class='card'>
+                            <div class="card-title">
+                                <a href="/meet/{{ i[0]._id }}">{{ i[0].meet_name }}</a>
+                            </div>
+                            <br>
+                            <div class="card-category">
+                                {# 지역 #}
+                                {{ i[0].location }} <br>
+                                {# 분류 #}
+                                {{ i[0].category }} <br>
+                                {{ i[0].currentcount }}명 모집<br>
+                                모임장 : {{ i[0].leader_name }} <br>
+                            </div>
+                            {# 태그 #}
+                            {% for j in i[0].tags %}
+                                {% if j != "" %}
+                                    <div class="card-tag">#{{ j }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="scrollBt-left"><i class="fa-solid fa-caret-left"></i></div>
+        <div class="scrollBt-right"><i class="fa-solid fa-caret-right"></i></div>
+    </div>
+    <div class="category">
+        <h3 class="ListTitle">참여중 모임</h3>
+
+    </div>
+    <div class="cardContainer">
+        <div class="cards participate">
+            <ul>
+                <!--참여 중 모임 이 부분에 <li>로 모임 카드들 추가됨-->
+                {% for i in  meetInfo %}
+                    {% if i[0].leader_id != session['userid'] %}
+                        <li class='card'>
+                            <div class="card-title"><a href="/meet/{{ i[0]._id }}">{{ i[0].meet_name }}</a></div>
+                            <br>
+                            <div class="card-category">
+                                {# 지역 #}
+                                {{ i[0].location }} <br>
+                                {# 분류 #}
+                                {{ i[0].category }} <br>
+                                {{ i[0].currentcount }}명 모집<br>
+                                모임장 : {{ i[0].leader_name }} <br>
+                            </div>
+                            <br>
+                            {# 태그 #}
+                            {% for j in i[0].tags %}
+                                {% if j != "" %}
+                                    <div class="card-tag">#{{ j }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="scrollBt-left"><i class="fa-solid fa-caret-left"></i></div>
+        <div class="scrollBt-right"><i class="fa-solid fa-caret-right"></i></div>
+
+    </div>
+</div>
+</body>

@@ -8,7 +8,7 @@
   "description": "A jQuery plugin that adds cross-browser mouse wheel support.",
   "license": "MIT",
   "homepage": "https://github.com/jquery/jquery-mousewheel",
-  "main": "./jquery.mousewheel.js",
+  "main": "jquery.mousewheel.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/jquery/jquery-mousewheel.git"

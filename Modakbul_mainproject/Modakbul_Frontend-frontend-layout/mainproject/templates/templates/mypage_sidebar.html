@@ -1,0 +1,25 @@
+<div class="sidePage">
+               <div class="sideTop">
+                <div class="profilepic">
+                   {% if session['profile'] %} <!-- 프로필이 있다면 -->
+                        <img src="{{session['profile']}}" width="150px"; height="150px;" style="border-radius: 50%;">
+                    {% endif %}
+               </div>
+                <h2 class="listTitle">{{session['username']}}</h2>
+                <div class="level">Lv. 00</div>
+                <button class="makeMeet"><a href="/makepage">모임만들기</a></button>
+                <ul class="sideOptions">
+                    <li><a href="/pfedit">프로필 수정</a></li>
+                    <li><a href="/mymeets">대기중 모임</a></li>
+                </ul>
+                </div>
+                <a href="/logout" class="logout">로그아웃</a>
+        <script>
+        $(".makeMeet").click(function(){
+                $(".detailsBg").eq(1).show();
+            })
+        $(".sideOptions").children().first().click(function(){
+                $(".detailsBg").first().show();
+            })
+        </script>
+</div>

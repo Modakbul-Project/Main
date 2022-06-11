@@ -1,0 +1,88 @@
+<head>
+        <link rel = "stylesheet" href="static/css/meetadmin.css">
+</head>
+    <div class="meetTitleNav">
+              <div class="meetwrap">
+              <div class="meetPic">a</div>
+               <h1 class="meetTitle">모임명</h1>
+               </div>
+               <a class="meetOption" href="/meet">모임홈</a>
+           </div>
+           <div class="meetContentsWrap">
+               <div class="meetBoard">
+                  <div class="sub">
+                  <h2>참여 신청</h2>
+                   <div class="profileList">
+
+                       <div class="subProfile">
+                        <div class="profilePic">
+                            <img src="" alt="">
+                        </div>
+                        <div class="subName">내이름</div>
+                        <div class="subLv">Lv.23</div>
+                        <button>X</button><button>V</button>
+                   </div>
+                   <div class="subProfile">
+                        <div class="profilePic">
+                            <img src="" alt="">
+                        </div>
+                        <div class="subName">내이름</div>
+                        <div class="subLv">Lv.23</div>
+                        <button>X</button><button>V</button>
+                   </div>
+
+                   </div>
+                </div>
+                <div class="members">
+                  <h2>멤버 목록</h2>
+                   <div class="profileList">
+
+                       <div class="subProfile">
+                        <div class="profilePic">
+                            <img src="" alt="">
+                        </div>
+                        <div class="subName">내이름</div>
+                        <div class="subLv">Lv.23</div>
+                        <button>탈퇴</button>
+                   </div>
+                   <div class="subProfile">
+                        <div class="profilePic">
+                            <img src="" alt="">
+                        </div>
+                        <div class="subName">내이름</div>
+                        <div class="subLv">Lv.23</div>
+                        <button>탈퇴</button>
+                   </div>
+                </div>
+               </div>
+               <div id="toggleBt">
+                       this is toggle
+                   </div>
+                   <script>
+                    $('.sub').hide();
+                    $('#toggleBt').click(function(){
+                        $('.sub').toggle();
+                        $('.members').toggle();
+                    });
+                   </script>
+               </div>
+               <div class="meetNotice">
+                   <h2>공지사항</h2>
+                   <div class="notice">
+                       <ul>
+                       <li>
+                           <span>공지1</span> <div class="noticeAdmin">수정 삭제</div>
+                       </li>
+                   </ul>
+                   </div>
+               </div>
+           </div>
+<script>
+    $(".detailsBg").hide();
+    $(".subProfile").click(function(){
+        $(".detailsBg").first().show();
+    })
+    $(".noticeAdmin").click(function(){
+        $(".detailsBg").eq(1).show();
+    })
+</script>

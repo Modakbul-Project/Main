@@ -208,16 +208,15 @@
 
     <div class="detailsBg">
         <div class="detailsWrap">
-           <form method="POST" action="/edit/{{meetInfo[0]._id}}/{{data._id}}">
+           <form method="POST" action="/write/{{meetInfo[0]._id}}">
             <div class="detailTitle">
                <button>X</button>
                 <div class="formTitle">
-                    <input type="text" name="title" value="{{ data.title }}">
+                    <input type="text" name="title" placeholder="공지 제목">
                 </div>
             </div>
             <div class="detailContents">
               <textarea name="contents" id="meetDetail">
-                  {{ data.contents }}
               </textarea>
             </div>
             <div class="detailFooter">

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel = "stylesheet" href="static/css/base.css">
+    {% block head %}
+    <title>모닥불{% block title %}{% endblock %}</title>
+    {% endblock %}
+</head>
+<body>
+   <div class="main container">
+       <header class="container">
+           <a class="logo" href="/"> 모닥불 </a>
+           <nav class="navbar">
+               {% if not session['userid'] %}
+                    <button style=margin-right:20px;"><a href="/login">로그인</a></button>
+               {% else %}
+                    {% if session['profile'] %} <!-- 프로필이 있다면 -->
+                        <img src="{{session['profile']}}" width="30px"; height="30px"; style="margin-right:5px;border-radius: 50%;">
+                    {% endif %}
+                    {{session['username']}}님 반갑습니다.
+                    <button style="margin-left:20px;margin-right:20px;"><a href="/logout">로그아웃</a></button>
+               {% endif %}
+           <div class="search"><form action="#" method="post">
+               <input type="text" name="keyword" placeholder="검색">
+               <input type="submit" value="src">
+           </form></div>
+           <button class="mypage"><a href="/mypage">mypage</a></button>
+           </nav>
+        </header>
+       <div class="contents conatainer">
+           {% block body %}
+           {% endblock %}
+        </div>
+       <div class="footer conatainer">
+           {% block footer %}
+           {% endblock %}
+        </div>
+   </div>
+</body>
+</html>

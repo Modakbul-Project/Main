@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>프로필 수정</title>
+        <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel = "stylesheet" href="static/css/profileedit.css">
+</head>
+<body>
+   <div class="detailsBg">
+       <div class="profileWrap">
+        <button>X</button>
+
+            <div class="profileDetail">
+                <div class="detailWrap">
+                    <form method="POST" action="/pfedit" enctype = "multipart/form-data">
+                <div class="profileImg">
+                    <img src="{{session['profile']}}"/><label for="chooseProfile">icon</label>
+                    <!-- accept 속성을 "image/*" 로 설정하면 이미지 파일만 선택하게 한다.-->
+                    <input type="file" id="chooseProfile" name="profile" accept="image/*">
+                </div>
+                <div class="namePlace">
+                    <span>이름</span>
+                    <input type="text" id="username" name="username" placeholder="이름">
+                </div>
+                <div class="introPlace">
+                    <span>자기소개</span>
+                    <textarea id="introduce" name="introduce" placeholder="(글자수 제한 150자)"></textarea>
+                </div>
+                <input type="submit" value="저장" class="btn btn-secondary" style="color:white;">
+                    </form>
+                </div>
+            </div>
+    </div>
+    </div>
+    <script>
+        $(".profileWrap button").click(function(){
+            $(".detailsBg").hide();
+        })
+    </script>
+</body>
+</html>

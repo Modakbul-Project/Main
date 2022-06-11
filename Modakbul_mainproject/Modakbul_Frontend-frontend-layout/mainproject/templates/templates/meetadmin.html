@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel = "stylesheet" href="static/css/meetadmin.css"></head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/meetadmin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+</head>
 <body>
     <!--서버에서 flash로 넘어온 메시지가 있다면 alert로 출력 -->
     {%with messages = get_flashed_messages()%}
@@ -14,7 +16,7 @@
     {%endwith%}
    <div class="main container">
     <header class="container">
-           <a class="logo" href="/"><img src="{{ url_for('static', filename='logo.png') }}" alt=""></a>
+           <a class="logo" href="/"> 모닥불 </a>
            <nav class="navbar">
                {% if not session['userid'] %}
                     <button style=margin-right:20px;"><a href="/login">로그인</a></button>
@@ -50,11 +52,11 @@
                         {% for i in waiting %}
                        <div class="subProfile">
                         <div class="profilePic">
-                            <img src="../{{i.user_profile}}" alt="">
+                            <img src="../static/profile/{{i.profile}}" alt="">
                         </div>
-                        <div class="subName">{{i.user_name}}</div>
+                        <div class="subName">{{i.username}}</div>
                         <form method="post">
-                            <input type="hidden" name="userid" value="{{i.user_id}}">
+                            <input type="hidden" name="userid" value="{{i.userid}}">
                             <input type="hidden" name="meet_name" value="{{meetInfo[0].meet_name}}">
                             <input type="submit" value="V" onclick="javascript: form.action='/accept';"/>
                             <input type="submit" value="X" onclick="javascript: form.action='/reject';"/>

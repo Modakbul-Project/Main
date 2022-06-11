@@ -1,0 +1,77 @@
+<head>
+    <link rel = "stylesheet" href="static/css/mypage_meetcard.css">
+</head>
+<body>
+<div class="contents conatainer">
+                <div class="category">
+                  <h3 class="ListTitle">내 모임</h3>
+                  <form action="#" method="post">
+                   <!-- 디자인 하려면 button->li로 넣어야 할듯 -->
+                    <select name="openClosed" id="openClosed">
+                        <option value="모집중">모집 중</option>
+                        <option value="모집완료">모집 완료</option>
+                    </select>
+               </form>
+                </div>
+
+               <div class="cardContainer">
+               <div class="cards makeSelf">
+                   <ul>
+                   <li class="card">
+                       <!--내 모임 이 부분에 <li>로 모임 카드들 추가됨-->
+                        {% for i in  meetInfo %}
+                        {% if i[0].leader_id == session['userid'] %}
+                            <li class='card'>모임명: <a href="/meet/{{i[0]._id}}">{{i[0].meet_name}}</a> <br>
+                            인원 수 : {{i[0].currentcount}}명 <br>
+                            분류 : {{i[0].category}} <br>
+                            모임장 : {{i[0].leader_name}} <br>
+                            지역 : {{i[0].location}} <br>
+                            태그 : {% for j in i[0].tags %}
+                                         {% if j != ""%}
+                                           #{{j}}
+                                         {% endif %}
+                                      {% endfor %}
+                            </li>
+                        {% endif %}
+                        {% endfor %}
+               </ul>
+               </div>
+                   <div class="scrollBt-left">왼쪽버튼</div>
+                   <div class="scrollBt-right">오른쪽버튼</div>
+            </div>
+            <div class="category">
+                  <h3 class="ListTitle">참여중 모임</h3>
+                  <form action="#" method="post">
+                   <!-- 디자인 하려면 button->li로 넣어야 할듯 -->
+                    <select name="openClosed" id="openClosed2">
+                        <option value="모집중">모집 중</option>
+                        <option value="모집완료">모집 완료</option>
+                    </select>
+               </form>
+                </div>
+            <div class="cardContainer">
+               <div class="cards participate">
+                   <ul>
+                     <!--참여 중 모임 이 부분에 <li>로 모임 카드들 추가됨-->
+                      {% for i in  meetInfo %}
+                        {% if i[0].leader_id != session['userid'] %}
+                            <li class='card'>모임명: <a href="/meet/{{i[0]._id}}">{{i[0].meet_name}}</a> <br>
+                            인원 수 : {{i[0].currentcount}}명 <br>
+                            분류 : {{i[0].category}} <br>
+                            모임장 : {{i[0].leader_name}} <br>
+                            지역 : {{i[0].location}} <br>
+                            태그 : {% for j in i[0].tags %}
+                                  {% if j != ""%}
+                                    #{{j}}
+                                  {% endif %}
+                                  {% endfor %}
+                            </li>
+                        {% endif %}
+                        {% endfor %}
+               </ul>
+               </div>
+                   <div class="scrollBt-left">왼쪽버튼</div>
+                   <div class="scrollBt-right">오른쪽버튼</div>
+            </div>
+</div>
+</body>

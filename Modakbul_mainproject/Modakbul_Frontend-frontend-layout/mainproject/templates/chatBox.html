@@ -1,0 +1,104 @@
+{#       <div id="chatBt">chatBt</div>#}
+{#       <div id="chatBox">chatBox#}
+{#       <div id="chatCloseBt">X</div></div>#}
+{#       <script>#}
+{#        $('#chatBox').hide();#}
+{#        $('#chatBt').click(function(){#}
+{#            $('#chatBox').show();#}
+{#        });#}
+{#        $('#chatCloseBt').click(function(){#}
+{#            $('#chatBox').hide();#}
+{#        });#}
+{#       </script>#}
+
+
+<head>
+    <link rel="stylesheet" href="static/css/chatBox.css">
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+            integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="chatBt"><i class="fa-solid fa-comment-dots"></i></div>
+<div id="chatBox">
+
+    <div id="memberscontainer">
+
+    </div>
+
+    <div id="logcontainer" class="scrollbar">
+        <div id="chatLog">
+            <!--
+            <div class="othermessage">
+                <div class="chatimg"></div><span>name</span><div class="bubble">이거 가운데 맞는거니</div>
+            </div>
+            <div class="yourmessage">
+                <div class="bubble">aa</div>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <form action="" method="POST">
+        <input type="hidden" class="username" style='font-size:15px;' value="{{ user }}"/>
+        <input type="hidden" class="userimg" value="{{ userimg }}">
+        <input type="text" class="message" style='font-size:15px;' placeholder="Messages"/>
+        <input type="submit" value="&#128172;"/>
+    </form>
+    <div id="chatCloseBt">X</div>
+</div>
+<script>
+    $('#chatBox').hide();
+    $('#chatBt').click(function () {
+        $('#chatBox').show();
+    });
+    $('#chatCloseBt').click(function () {
+        $('#chatBox').hide();
+    });
+
+    function updateScroll() {
+        $("#chatLog").scrollTop()
+        $("#logcontainer").scrollTop($('#logcontainer').prop("scrollHeight"));
+    }
+</script>
+<script type="text/javascript">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    socket.on('connect', function () {
+        socket.emit('my event', {
+            data: 'User Connected'
+
+        })
+
+        var form = $('form').on('submit', function (e) {
+            e.preventDefault()
+            let user_input = $('input.message').val()
+            socket.emit('my event', {
+                message: user_input
+            })
+            $('input.message').val('').focus()
+        })
+
+    })
+
+
+    socket.on('my response', function (msg) {
+        //console.log(msg);
+        if (typeof msg.message !== 'undefined') {
+            if (msg.user != $('input.username').val()) {
+                $('#chatLog').append('<div class="othermessage"><div class="chatimg"><img src="' + msg.userimg + '" alt=""></div><span>' + msg.user + '</span><div class="bubble">' + msg.message + '</div></div>');
+                //$( '.othermessage .chatimg' ).append('<img src="'+msg.userimg+'" alt="">');
+                //  $( '.othermessage span' ).append( msg.user );
+                // $( '.othermessage .bubble' ).append( msg.message );
+                updateScroll();
+            } else {
+                $('#chatLog').append('<div class="yourmessage"><div class="bubble">' + msg.message + '</div></div>');
+                //$( '.yourmessage .bubble' ).append( msg.message );
+                updateScroll();
+            }
+        }
+    })
+</script>
+
+</body>

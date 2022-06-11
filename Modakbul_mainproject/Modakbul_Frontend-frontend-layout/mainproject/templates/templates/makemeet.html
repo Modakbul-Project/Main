@@ -230,8 +230,8 @@
         <div class="detailsWrap">
            <form method="post" action="/makepage" enctype = "multipart/form-data">
             <div class="detailTitle">
-               <button><a href="mypage">X</a></button>
-		    <div class="meetPic">
+               <button>X</button>
+                <div class="meetPic">
                     <label for="chooseProfile"><img src=""></label>
                     <input type="file" id="chooseProfile" name="meet_profile" accept="image/*" style="display:none;">
                 </div>
@@ -306,6 +306,15 @@
                 </ul>
                 <h5>태그</h5>
                 <ul id="makeTag">
+                   <li>
+                   <select name="tag" id="tag">
+                       <option>단체모임</option>
+                       <option>스포츠</option>
+                       <option>독서</option>
+                       <option>공부</option>
+                       <option>코딩</option>
+                    </select>
+                    </li>
                     <li>
                         <input type="text" id="addTag" placeholder="직접 작성하기">
                     </li>
@@ -316,7 +325,6 @@
                 <ul id="smallTag">
                 </ul>
             </div>
-	    <h5>모임 세부 사항</h5>
             <div class="detailContents">
               <textarea name="meetDetail" id="meetDetail"></textarea>
             </div>

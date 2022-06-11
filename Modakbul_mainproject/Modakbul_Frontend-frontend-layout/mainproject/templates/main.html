@@ -1,682 +1,278 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{% extends "base.html" %}
+{% block title %} : main{% endblock %}
+{% block head %}
+    <style>
+        .wrap {
+            position: absolute;
+            left: 0;
+            bottom: 40px;
+            width: 288px;
+            height: 132px;
+            margin-left: -144px;
+            text-align: left;
+            overflow: hidden;
+            font-size: 12px;
+            font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+            line-height: 1.5;
+        }
+
+        .wrap * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrap .info {
+            width: 286px;
+            height: 120px;
+            border-radius: 5px;
+            border-bottom: 2px solid #ccc;
+            border-right: 1px solid #ccc;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .wrap .info:nth-child(1) {
+            border: 0;
+            box-shadow: 0px 1px 2px #888;
+        }
+
+        .info .title {
+            padding: 5px 0 0 10px;
+            height: 30px;
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .info .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #888;
+            width: 17px;
+            height: 17px;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+        }
+
+        .info .close:hover {
+            cursor: pointer;
+        }
+
+        .info .body {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info .desc {
+            position: relative;
+            margin: 5px 0 0 90px;
+            height: 85px;
+        }
+
+        .desc .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .desc .jibun {
+            font-size: 11px;
+            color: #888;
+            margin-top: -2px;
+        }
+
+        .info .img {
+            position: absolute;
+            top: 6px;
+            left: 5px;
+            width: 73px;
+            height: 71px;
+            border: 1px solid #ddd;
+            color: #888;
+            overflow: hidden;
+        }
+
+        .info:after {
+            content: '';
+            position: absolute;
+            margin-left: -12px;
+            left: 50%;
+            bottom: 0;
+            width: 22px;
+            height: 12px;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+        }
+
+        .info .link {
+            color: #5085BB;
+            float: right;
+            margin-right: 25px;
+        }
+    </style>
     <script src="{{ url_for('static', filename='jquery.mousewheel.js') }}"></script>
-    <meta charset="UTF-8">
-    <title>모닥불</title>
-</head>
-<style>
-    html, body {
-        margin: 0;
-        border: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .container {
-    }
-
-    .main {
-        margin: 0;
-        border: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    header {
-        top: 0px;
-        padding: 1rem 2rem;
-        z-index: 10;
-        display: flex;
-        position: relative;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #F5A9A9;
-    }
-
-    header .logo {
-        font-weight: bold;
-        color: white;
-        font-size: 2rem;
-        text-decoration: none;
-    }
-
-    .navbar {
-        display: flex;
-        position: relative;
-    }
-
-    .search input {
-        height: 30px;
-        margin-right: 1rem;
-    }
-
-    .contents {
-        overflow: hidden;
-    }
-
-    .category {
-        padding: 1rem;
-        display: flex;
-        position: relative;
-        align-items: center;
-        background-color: #F5A9A9;;
-        z-index: 5;
-    }
-
-
-    .category ul {
-        list-style: none;
-        padding-left: 0;
-        display: flex;
-    }
-
-    .category form select {
-        height: 30px;
-    }
-
-    .tags li {
-        padding: 5px;
-        background-color: white;
-        font-size: 0.5rem;
-        border-radius: 10px;
-        margin-left: 5px;
-    }
-
-    .cardContainer {
-        position: relative;
-        display: flex;
-        align-items: center;
-        background-color: #F5A9A9;
-        overflow: hidden;
-        padding: 1rem;
-        padding-bottom: 1.5rem;
-        z-index: 5;
-    }
-
-    .cards {
-        width: 100%;
-        position: relative;
-        display: flex;
-        align-items: center;
-        overflow: scroll;
-        white-space: nowrap;
-        ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
-
-    }
-
-    .cards::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Opera*/
-    }
-
-    .cards ul {
-        padding: 0;
-        margin: 0;
-    }
-
-    .card {
-        display: inline-block;
-        list-style: none;
-        padding-left: 0;
-        margin-right: 2px;
-        border: 1px solid gray;
-        width: 150px;
-        height: 200px;
-        background-color: white;
-    }
-
-    .map {
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        overflow: hidden;
-        z-index: 0;
-    }
-
-    .scrollBt-right {
-        position: absolute;
-        right: 0;
-        z-index: 4;
-    }
-
-    .scrollBt-left {
-        position: absolute;
-        left: 0;
-        z-index: 4;
-    }
-
-    .hideToggle {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        bottom: 0;
-    }
-
-    .detailsBg {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    .detailsBg {
-        background: rgba(255, 255, 255, 0.5);
-        position: fixed;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        top: 0;
-        z-index: 100;
-    }
-
-    .detailsWrap {
-        max-width: 450px;
-        width: 80%;
-        height: 80%;
-        background-color: white;
-        border: 1px solid lightgray;
-        border-radius: 5px;
-        display: flex;
-        flex-direction: column;
-        padding: 2rem;
-    }
-
-    .detailTitle {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1rem;
-        position: relative;
-    }
-
-    .detailTitle .meetPic {
-        width: 50px;
-        height: 50px;
-        background-color: gainsboro;
-        border-radius: 50%;
-    }
-
-    .detailTitle h2 {
-        margin: 0;
-        padding: 0;
-        margin-left: 10px;
-    }
-
-    .detailTitle span {
-        margin-left: 10px;
-        padding-top: 10px;
-    }
-
-    .detailTags ul {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        align-items: center;
-    }
-
-    .detailTags #bigTag li {
-        padding: 10px 20px;
-        margin-right: 5px;
-        background-color: gainsboro;
-        border-radius: 50px;
-    }
-
-    .detailTags #smallTag li {
-        padding: 10px;
-        font-size: 0.1rem;
-    }
-
-    .detailTags #smallTag li::before {
-        content: "# ";
-        font-weight: bold;
-        font-size: 0.8rem;
-    }
-
-    .detailContents {
-        flex: 1;
-        border: 1px solid lightgray;
-        overflow-y: scroll;
-    }
-
-    .detailContents img {
-        max-width: 100%;
-    }
-
-    .detailFooter {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-top: 1rem;
-    }
-
-    #numPeople {
-        font-size: 0.8rem;
-        font-weight: bold;
-        color: darkslategray;
-    }
-
-    #numPeople span:nth-child(1) {
-        font-size: 1.5rem;
-    }
-
-    #numPeople span:nth-child(2) {
-        font-size: 1rem;
-    }
-
-    #numPeople span:nth-child(3) {
-        font-size: 1rem;
-    }
-
-    .detailFooter button {
-        border: 0;
-        color: white;
-        background-color: gray;
-        font-weight: bold;
-        padding: 10px 40px;
-        border-radius: 50px;
-    }
-
-    .detailTitle button {
-        position: absolute;
-        right: 0;
-        top: 0;
-        background: 0;
-        border: 0;
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-
-    .wrap {
-        position: absolute;
-        left: 0;
-        bottom: 40px;
-        width: 288px;
-        height: 132px;
-        margin-left: -144px;
-        text-align: left;
-        overflow: hidden;
-        font-size: 12px;
-        font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-        line-height: 1.5;
-    }
-
-    .wrap * {
-        padding: 0;
-        margin: 0;
-    }
-
-    .wrap .info {
-        width: 286px;
-        height: 120px;
-        border-radius: 5px;
-        border-bottom: 2px solid #ccc;
-        border-right: 1px solid #ccc;
-        overflow: hidden;
-        background: #fff;
-    }
-
-    .wrap .info:nth-child(1) {
-        border: 0;
-        box-shadow: 0px 1px 2px #888;
-    }
-
-    .info .title {
-        padding: 5px 0 0 10px;
-        height: 30px;
-        background: #eee;
-        border-bottom: 1px solid #ddd;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .info .close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        color: #888;
-        width: 17px;
-        height: 17px;
-        background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
-    }
-
-    .info .close:hover {
-        cursor: pointer;
-    }
-
-    .info .body {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .info .desc {
-        position: relative;
-        margin: 13px 0 0 90px;
-        height: 75px;
-    }
-
-    .desc .ellipsis {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .desc .jibun {
-        font-size: 11px;
-        color: #888;
-        margin-top: -2px;
-    }
-
-    .info .img {
-        position: absolute;
-        top: 6px;
-        left: 5px;
-        width: 73px;
-        height: 71px;
-        border: 1px solid #ddd;
-        color: #888;
-        overflow: hidden;
-    }
-
-    .info:after {
-        content: '';
-        position: absolute;
-        margin-left: -12px;
-        left: 50%;
-        bottom: 0;
-        width: 22px;
-        height: 12px;
-        background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
-    }
-
-    .info .link {
-        color: #5085BB;
-    }
-
-</style>
-<body>
-<p style="display: none" id="user_name1">{{ session['username'] }}</p>
-<p style="display: none" id="user_id1">{{ session['userid'] }}</p>
-<div class="main container">
-    <header class="container">
-        <a class="logo" href="/"> 모닥불 </a>
-        <nav class="navbar">
-            {% if not session['userid'] %} <!-- 로그인이 안되어 있을 경우 -->
-                <button style=margin-right:20px;"><a href="/login">로그인</a></button>
-            {% else %}
-                {% if session['profile'] %} <!-- 프로필이 있다면 -->
-                    <img src="{{ session['profile'] }}" width="30px" ; height="30px;"
-                         style="margin-right:5px;border-radius:50%;">
-                {% endif %}                 <!-- 로그인이 되어 있을 경우 -->
-                {{ session['username'] }}님 반갑습니다.
-                <button style="margin-left:20px;margin-right:20px;"><a href="/logout">로그아웃</a></button>
-            {% endif %}
-            <div class="search">
-                <form action="#" method="post">
-                    <input type="text" name="keyword" placeholder="검색">
-                    <input type="submit" value="src">
-                </form>
-            </div>
-            <button class="mypage"><a href="/mypage">mypage</a></button>
-        </nav>
-    </header>
-    <div class="contents conatainer">
-        <div class="category">
-            <form action="#" method="post">
-                <!-- 디자인 하려면 button->li로 넣어야 할듯 -->
-                <select name="location" id="loc">
-                    <optgroup label="도시명"></optgroup>
-                    <option value="지역명">지역명</option>
-                </select>
-                <select name="category" id="category">
-                    <optgroup label="대분류"></optgroup>
-                    <option value="주제명">주제명</option>
-                </select>
-                <select name="headcount" id="head">
-                    <option value="">여기는 직접입력으로(생긴건 드롭다운처럼)</option>
-                </select>
-            </form>
-            <div class="tags">
-                <ul>
-                    <li>태그 1</li>
-                    <li>태그 2</li>
-                </ul>
-            </div>
-        </div>
-
-        <script>
-            //마우스 가로 스크롤 이벤트
-            $(function () {
-
-                $(".cards").mousewheel(function (event, delta) {
-
-                    this.scrollLeft -= (delta * 30);
-
-                    event.preventDefault();
-
-                });
-
-            });
-
-        </script>
-        <div class="cardContainer">
-
-            <div class="cards">
-                <ul id="card_list">
-
-
-                </ul>
-            </div>
-            <div class="scrollBt-left">왼쪽버튼</div>
-            <div class="scrollBt-right">오른쪽버튼</div>
-            <div class="hideToggle"><a> 숨기기 </a></div>
-            <script>
-                //스크롤 버튼
-                $(".scrollBt-right").click(function () {
-                    $(".cards").animate({scrollLeft: "+=500"}, 800);
-                });
-                $(".scrollBt-left").click(function () {
-                    $(".cards").animate({scrollLeft: "-=500"}, 800);
-                });
-
-                //숨기기 토글
-                //숨기기 클릭 - 카드 컨테이너 위쪽으로 밀려 올라감 (밑면이 top0이 되게)
-                $(".hideToggle a").click(function () {
-                    $(".cardContainer").animate({height: "0"}, 500);
-
-                });
+    <link rel="stylesheet" href="static/css/main.css">
+    {{ super() }}
+{% endblock %}
+{% block body %}
+    <p style="display: none" id="user_name1">{{ session['username'] }}</p>
+    <p style="display: none" id="user_id1">{{ session['userid'] }}</p>
+    <p style="display: none" id="meet_name"></p>
+    <!--서버에서 flash로 넘어온 메시지가 있다면 alert로 출력 -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <script type="text/javascript">
+                alert("{{messages[-1]}}");
             </script>
+        {% endif %}
+    {% endwith %}
+
+    <div class="cardContainer">
+
+        <div class="cards">
+            <ul id="card_list">
+                {% for i in  meetInfo %}
+                    <li class='card'>
+                        <div class="card-title">{{ i.meet_name }}</div>
+                        <br>
+                        <div class="card-category">
+                            {# 지역 #}
+                            {{ i[0].location }} <br>
+                            {# 분류 #}
+                            {{ i[0].category }} <br>
+                            {{ i[0].currentcount }}명 모집<br>
+                            모임장 : {{ i[0].leader_name }} <br>
+                        </div>
+                        <br>
+                        <div class="card-tag">
+                            {% for j in i.tags %}
+                                {% if j != "" %}
+                                    <div class="card-tag">#{{ j }}</div>
+                                {% endif %}
+                            {% endfor %} <br>
+                        </div>
+                        <button value="{{ i.meet_name }}" class='card_button' onclick="mClick(this)">상세보기</button>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-        <div id="map" style="width:100%;height:500px;margin-top:20px;"></div>
+        <div class="scrollBt-left"><i class="fa-solid fa-caret-left"></i></div>
+        <div class="scrollBt-right"><i class="fa-solid fa-caret-right"></i></div>
 
-        <script type="text/javascript"
-                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d8a73cfa5a833cba814b8937d2b54a0e"></script>
-        <script>
-            var mapContainer = document.getElementById('map'),
-                mapOption = {
-                    center: new kakao.maps.LatLng(37.5826052, 127.0101245), // 지도의 중심좌표
-                    level: 5 // 지도의 확대 레벨
-                };
-
-            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-            // 커스텀 오버레이에 표시할 내용입니다
-            // HTML 문자열 또는 Dom Element 입니다
-            var positions = []
-            {% for i in data %}
-                positions.push(
-                    {
-                        title: '<div class="wrap">' +
-                            '    <div class="info">' +
-                            '        <div class="title">' +
-                            '            {{i.title}}' +
-                            '        </div>' +
-                            '        <div class="body">' +
-                            '            <div class="img">' +
-                            '                <img src="../static/study.jpg" width="73" height="70">' +
-                            '           </div>' +
-                            '            <div class="desc">' +
-                            '                <div class="ellipsis">{{i.topic}}</div>' +
-                            '                <div class="jibun ellipsis">{{i.recruit_num}}명 모집합니다.</div>' +
-                            '                <div class="jibun ellipsis">{{i.contents}}</div>' +
-                            '                <div class="jibun ellipsis">{{i.address}}</div>' +
-                            '            </div>' +
-                            '        </div>' +
-                            '    </div>' +
-                            '</div>',
-                        latlng: new kakao.maps.LatLng({{i.lat}}, {{i.lng}})
-                    });
-            {% endfor %}
-
-            //displayMarker 함수를 호출해 positions 배열에 저장 된 마커들을 지도에 표시한다.
-            for (let i = 0; i < positions.length; i++) {
-                var data = positions[i];
-                displayMarker(data);
-            }
-
-            // 지도에 마커를 표시하는 함수입니다
-            function displayMarker(data) {
-                //마커 위치 설정
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: data.latlng
-                });
-                //오버레이 위치 설정
-                var overlay = new kakao.maps.CustomOverlay({
-                    yAnchor: 3,
-                    position: marker.getPosition()
-                });
-
-                //오버레이 내용 설정
-                var content = document.createElement('div');
-                content.innerHTML = data.title;
-
-                overlay.setContent(content);
-
-                //마커를 클릭하면 오버레이가 나타나고 마커가 지도의 중심으로 이동한다.
-                kakao.maps.event.addListener(marker, 'click', function () {
-                    var latlng = marker.getPosition();
-                    map.setCenter(latlng);
-                    overlay.setMap(map);
-                });
-
-                //마커를 우클릭하면 오버레이가 사라진다.
-                kakao.maps.event.addListener(marker, 'rightclick', function () {
-                    overlay.setMap(null);
-                });
-            }
-
-
-        </script>
-        <div class="footer conatainer">
-            <!--팀원이나 간단한 정보들적기, 높이 낮아지면 사라짐-->
-        </div>
-        <script>
-            $("#card1").click(function () {
-                alert("클릭인식됨");
-                $(".detailsBg").show();
-                //this통해 검색, 받아와서 보여주기, 주소창에 정보 띄울 것!(주소로 카드 접근 가능하도록)
-            })
-        </script>
-        <div class="footer conatainer">
-            <!--팀원이나 간단한 정보들적기, 높이 낮아지면 사라짐-->
-        </div>
-    </div>
-    <div class="detailsBg">
-        <div class="detailsWrap">
-            <div class="detailTitle">
-                <button>X</button>
-                <div class="meetPic"><img src="" alt=""></div>
-                <h2 id="card_title"></h2>
-                <span>Lv.23</span>
-            </div>
-            <div class="detailTags">
-                <ul id="bigTag">
-                    <li id="card_tag">서울시 강남구</li>
-                    <li>자유 주제</li>
-                    <li>2~5명</li>
-                </ul>
-                <ul id="smallTag">
-                    <li>느긋한</li>
-                    <li>주제자유</li>
-                </ul>
-            </div>
-            <div class="detailContents">
-                <img src="{{ url_for('static', filename='map.png') }}"/>
-                본문 내용 lorem ipsum
-            </div>
-            <div class="detailFooter">
-                <div id="numPeople">현재 인원 수 <span>2</span><span>/</span><span id="card_memberMax"></span></div>
-                <button id="card_joinButton" value="" onclick="meeting_join(this.value)">참여하기</button>
-            </div>
-        </div>
     </div>
     <script>
-        $(".detailsBg").hide();
-        $(".detailTitle button").click(function () {
-            $(".detailsBg").hide();
-        })
-    </script>
-
-</div>
-
-
-</div>
-</body>
-<script>
-    // 모임 목록 조회
-    function meeting_read(card_num) {
-        $.ajax({
-            type: "GET",
-            url: "/meeting_read",
-            data: {},
-            success: function (response) {
-                console.log(response);
-                let user_id = $("#user_id1").html();
-                for (let i = 0; i < response.length; i++) {
-                    if (response[i].leader_id != user_id) {
-                        document.getElementById('card_list').innerHTML += "<li class='card'>" + "위치 : " + response[i].location +
-                            "<br>" + "인원 수 : " + response[i].headcount + "<br>" + "분류 : " +
-                            response[i].category + "<br>" + "모임장 : " + response[i].leader_id + "<br>" +
-                            "스터디 제목 : " + response[i].meet_name + "<br>" +
-                            "<button value=" + i + " class='" + "card_button" + "' + >" +
-                            "상세보기" + "</button>" + "</li>";
-
-                        $(".card_button").click(function () {
-                            $(".detailsBg").show();
-                            document.getElementById('card_title').innerHTML = response[this.value].meet_name;
-                            document.getElementById('card_tag').innerHTML = response[this.value].tags[1];
-                            document.getElementById('card_memberMax').innerHTML = response[this.value].headcount;
-                            document.getElementById('card_joinButton').value = response[this.value].meet_name;
-                            //this통해 검색, 받아와서 보여주기, 주소창에 정보 띄울 것!(주소로 카드 접근 가능하도록)
-                        })
-                    }
-
+        function mClick(meet) {
+            var car = "hello"
+            meet = meet.value
+            {% for i in meetInfo %}
+                if (meet == "{{i.meet_name}}") {
+                    $('#card_title').text("{{i.meet_name}}");
+                    document.getElementById('meetPic').src = "../static/meet_profile/{{i.meet_profile}}";
+                    $('#card_location').text("{{i.location}}");
+                    $('#card_category').text("{{i.category}}");
+                    $('#currentcount').text("{{i.currentcount}}");
+                    $('#headcount').text("{{i.headcount}}");
+                    $('#currentcount2').text("{{i.currentcount}}");
+                    $('#headcount2').text("{{i.headcount}}");
+                    $('.detailContents').text("{{i.meetDetail}}");
+                    $('.meet_name').val("{{i.meet_name}}");
+                    $(".detailsBg").show();
                 }
+            {% endfor %}
+        }
+    </script>
+    <div id="map" style="width:100%;height:500px;margin-top:20px;"></div>
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d8a73cfa5a833cba814b8937d2b54a0e"></script>
+    <script>
+        var mapContainer = document.getElementById('map'),
+            mapOption = {
+                center: new kakao.maps.LatLng(37.5826052, 127.0101245), // 지도의 중심좌표
+                level: 5 // 지도의 확대 레벨
+            };
 
-            }
-        })
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        // 커스텀 오버레이에 표시할 내용입니다
+        // HTML 문자열 또는 Dom Element 입니다
+        var positions = []
+        {% for i in data %}
+            positions.push(
+                {
+                    title: '<div class="wrap">' +
+                        '    <div class="info">' +
+                        '        <div class="title">' +
+                        '            {{i.meet_title}}' +
+                        '        </div>' +
+                        '        <div class="body">' +
+                        '            <div class="img">' +
+                        '                <img src="../static/meet_profile/{{i.meet_profile}}" width="73" height="70">' +
+                        '           </div>' +
+                        '            <div class="desc">' +
+                        '                <div class="link" style="display: inline-block;"> ' +
+                        '                    <form method="post" action="/join"> ' +
+                        '                        <input type="hidden" class="meet_name" id="meet_name" name="meet_name" value="{{i.meet_name}}"> ' +
+                        '                        <button type="submit">참여하기</button></form></div>' +
+                        '                <div class="ellipsis">{{i.category}}</div>' +
+                        '                <div class="jibun ellipsis">{{i.headcount}}명 모집합니다.</div>' +
+                        '                <div class="jibun ellipsis">{{i.meetDetail}}</div>' +
+                        '                <div class="jibun ellipsis">{{i.address}}</div>' +
+                        '                <div class="jibun ellipsis">                   ' +
+                        '                   {% for j in i.tags %}                       ' +
+                            '                       {% if j != ""%}                       ' +
+                                '                           #{{j}}                              ' +
+                                '                       {% endif %}                             ' +
+                            '                   {% endfor %} </div>                         ' +
+                        '            </div>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '</div>',
+                    latlng: new kakao.maps.LatLng({{i.lat}}, {{i.lng}})
+                });
+        {% endfor %}
 
-    }
+        //displayMarker 함수를 호출해 positions 배열에 저장 된 마커들을 지도에 표시한다.
+        for (let i = 0; i < positions.length; i++) {
+            var data = positions[i];
+            displayMarker(data);
+        }
 
-    window.onload = meeting_read;
+        // 지도에 마커를 표시하는 함수입니다
+        function displayMarker(data) {
+            //마커 위치 설정
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: data.latlng
+            });
+            //오버레이 위치 설정
+            var overlay = new kakao.maps.CustomOverlay({
+                yAnchor: 3,
+                position: marker.getPosition()
+            });
 
-    function meeting_join(title) {
-        alert(title);
-        let user_name = $("#user_name1").html();
-        alert(user_name)
-        $.ajax({
-            type: "GET",
-            url: "/meeting_join",
-            data: {card_title: title, user_name: user_name},
-            success: function (response) {
-                console.log(response);
+            //오버레이 내용 설정
+            var content = document.createElement('div');
+            content.innerHTML = data.title;
 
-            }
-        })
+            overlay.setContent(content);
 
-    }
+            //마커를 클릭하면 오버레이가 나타나고 마커가 지도의 중심으로 이동한다.
+            kakao.maps.event.addListener(marker, 'click', function () {
+                var latlng = marker.getPosition();
+                map.setCenter(latlng);
+                overlay.setMap(map);
+            });
 
-</script>
-</html>
+            //마커를 우클릭하면 오버레이가 사라진다.
+            kakao.maps.event.addListener(marker, 'rightclick', function () {
+                overlay.setMap(null);
+            });
+        }
+    </script>
+    {% include 'moreinfo.html' %}
+    <script src="{{ url_for('static', filename='jquery.mousewheel.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/cardscroll.js') }}"></script>
+{% endblock %}
+{% block footer %}
+    <!--팀원이나 간단한 정보들적기, 높이 낮아지면 사라짐-->
+{% endblock %}
