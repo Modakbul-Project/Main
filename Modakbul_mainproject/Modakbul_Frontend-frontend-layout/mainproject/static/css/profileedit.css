@@ -101,7 +101,7 @@
         width:40px;
         height: 40px;
         position: absolute;
-        background-color: rgba( 0, 0, 0, 0.5 );
+        background-color: rgba( 0, 0, 0, 0.3 );
         display: flex;
         align-items: center;
         justify-content: center;
@@ -111,8 +111,12 @@
     }
 
     .profileImg span:hover{
-        background-color: rgba( 50, 50, 50, 0.5 );
+        background-color: rgba( 50, 50, 50, 0.3 );
 
+    }
+
+    .profileImg .fa-image{
+        color:#fff;
     }
 
     .namePlace, .introPlace{

@@ -1,7 +1,7 @@
 @charset "utf-8";
 
  .contents{
-        background-color:aliceblue;
+        background-color:#ea5a5a;
         display:flex;
         align-items:center;
         justify-content: center;
@@ -9,8 +9,8 @@
     }
 
     .loginBox{
-        
         padding:3rem;
+        padding-bottom:5rem;
         border: 1px solid gray;
         border-radius: 10px;
         background-color: white;
@@ -19,7 +19,7 @@
 
     .loginBox .logo{
         display: inline-block;
-        margin-bottom: 50px;
+        margin-bottom: 3rem;
     }
 
     .loginBox .formWrap{
@@ -31,21 +31,24 @@
         margin:0;
         padding: 0;
         border:1px solid lightgray;
-        height:2rem;
+        height:2.5rem;
         display: block;
         width: 99.4%;
     }
 
     .loginBox form input:last-child, .loginBox .oauth{
         margin: 0;
-        border: 1px solid lightblue;
-        background-color: aliceblue;
+        background-color: lightgray;
         width:100%;
         height:3rem;
+        border-radius:5px;
+        margin-top:5px;
     }
 
     .loginBox .oauth{
-        background-color: lightblue;
+        color:#fff;
+        border:0;
+        background-color: #ea5a5a;
     }
 
     .loginOptions ul{
@@ -57,6 +60,7 @@
         margin: 0;
         padding-left: 0;
         display: inline-block;
+
     }
 
     .loginOptions li:nth-child(n+2)::before{
@@ -66,3 +70,9 @@
         height:12px;
         background-color: gainsboro;
     }
+
+    .loginOptions li a{
+        text-decoration:none;
+        color:gray;
+    }
+

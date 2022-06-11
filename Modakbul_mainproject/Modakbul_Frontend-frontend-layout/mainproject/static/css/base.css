@@ -1,4 +1,30 @@
 @charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;900&display=swap');
+
+     a:link, a:visited, a{
+        text-decoration:none;
+        color:black;
+     }
+
+
+  .scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(255,255,255,0.5);
+  }
+  .scrollbar::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgba(150,150,150,0.5)
+  }
+  .scrollbar::-webkit-scrollbar-thumb:hover{
+  	background: rgba(150,150,150,0.9);
+  }
+  .scrollbar::-webkit-scrollbar-thumb:active{
+  	background: rgba(150,150,150,0.9)
+  }
 
 h1, h2, h3, h4, h5, h6{
     margin: 0;
@@ -6,6 +32,8 @@ h1, h2, h3, h4, h5, h6{
 }
 
 html, body, .main{
+        font-family: 'Noto Sans KR', sans-serif;
+        font-weight: 300;
         margin: 0;
         border: 0;
         width : 100%;
@@ -20,22 +48,27 @@ html, body, .main{
 
     header{
         top:0px;
-        padding: 1rem 2rem;
+        padding: 1rem;
         z-index:10;
         display:flex;
         position: relative;
         justify-content: space-between;
         align-items: center;
-        background-color: #F5A9A9;
-        border-bottom: 1px solid lightgray;
+        background-color: #ea5a5a;
+
     }
 
-    header .logo{
-        font-weight:bold;
-        color:white;
-        font-size:2rem;
-        text-decoration: none;
+    .logo{
+        width:150px;
+        height:auto;
+        overflow:hidden;
     }
+    .logo > img{
+        width:100%;
+        height:100%;
+
+    }
+
     .navbar{
         display: flex;
         position: relative;
@@ -50,3 +83,22 @@ html, body, .main{
         overflow: hidden;
         display:flex;
     }
+
+    .fa-user:link, .fa-user:visited, .fa-user{
+    text-decoration: none;
+    color:#ea5a5a;
+
+    }
+
+    .fa-user{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+        font-size : 1rem;
+        background-color:#fff;
+        border-radius:50%;
+        width:30px;
+        height:30px;
+        margin-right:10px;
+    }
+

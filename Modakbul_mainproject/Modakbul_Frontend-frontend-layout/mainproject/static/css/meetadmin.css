@@ -18,11 +18,19 @@
 
     .subProfile .profilePic{
         position: relative;
-        display: inline-block;
+        display: flex;
+        justify-content:center;
+        align-items:center;
         background-color:gray;
         width:100px;
         height:100px;
         border-radius: 50%;
+        overflow:hidden;
+    }
+
+    .profilePic img{
+        width:100%;
+        height:auto;
     }
 
     .subProfile .subName{
@@ -55,12 +63,18 @@
     }
 
     .meetBoard #toggleBt{
-        background-color: aquamarine;
+        background-color: lightgray;
         display:inline-block;
         position: absolute;
-        bottom:0;
+        top:0;
         right: 0;
         margin: 10px;
+        padding:10px;
+        padding-left:15px;
+        padding-right:15px;
+        border-radius:50px;
+        z-index:2;
+        cursor:pointer;
     }
 
     .noticeAdmin{

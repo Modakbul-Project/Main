@@ -63,10 +63,63 @@
         width: 100%;
         height: 100%;
         background-color: bisque;
+        background-image:url("../board.jpg");
+        background-size:cover;
         flex-wrap: nowrap;
         overflow: hidden;
     }
 
+    .meetBoard #board button{
+        position:absolute;
+        bottom:0;
+        left:0;
+        padding:10px;
+        border:0;
+        background-color:rgba(0,0,0,0.3);
+        color:#fff;
+        border-radius:50%;
+        margin:10px;
+        cursor:pointer;
+    }
+
+    .meetBoard #board button:hover{
+        background-color:rgba(0,0,0,0.5);
+    }
+
+    .draggable{
+        position: absolute;
+        background-color:#ffe294;
+        padding:10px;
+        white-space:normal;
+        word-break:break-all;
+        min-width: 100px;
+        min-height:100px;
+        filter:drop-shadow(1px 3px 3px rgba(0,0,0,0.3));
+    }
+
+    .draggable textarea{
+        border: 0;
+        resize:none;
+        width:100%;
+        height:100px;
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        overflow:inherit;
+    }
+
+    .draggable textarea:focus{
+        outline:none;
+    }
+
+    .meetBoard .members{
+        position:absolute;
+        top:0;
+        left:0;
+        background-color:#fff;
+        width:100%;
+        z-index:2;
+    }
     .meetBoard #calender{
         width: 100%;
         height: 100%;
@@ -74,24 +127,30 @@
         background-color: white;
     }
 
-    .meetBoard #toggleBt{
-        background-color: aquamarine;
-        display:inline-block;
-        position: absolute;
-        bottom:0;
-        right: 80px;
-        margin: 10px;
-        z-index:10;
-    }
-
-    .meetBoard #membersBt{
-        background-color: skyblue;
+    .meetBoard .toggleButtons{
         display:inline-block;
         position: absolute;
         bottom:0;
         right: 0;
         margin: 10px;
         z-index:10;
+    }
+
+    #toggleBt i, #membersBt i{
+        font-size:1.5rem;
+        color:rgba(0,0,0,0.5);
+
+    }
+
+    #toggleBt i:hover, #membersBt i:hover{
+        color:rgba(0,0,0,0.8);
+
+    }
+
+    .meetBoard #membersBt, .meetBoard #toggleBt{
+        display:inline-block;
+        margin-right:10px;
+        margin-bottom:3px;
     }
 
     .profileList{
@@ -164,9 +223,9 @@
     .meetNotice .notice{
         height: 100%;
         flex:1;
-        overflow: scroll;
+        overflow-y: scroll;
         text-overflow: ellipsis;
-        white-space: nowrap;
+        white-space: normal;
         line-height: 2;
     }
 
@@ -174,6 +233,7 @@
         text-align: justify;
         list-style:square;
         padding-left: 0;
+        padding-right:10px;
     }
 
         @media(max-width:1000px){
@@ -191,9 +251,22 @@
             font-size: 1rem;
         }
 
-       @media(max-height:800px){
-        .meetNotice{
-            display:none;
-        }
-      }
+        .meetNotice > span {
+        padding-top: 0;
     }
+    .meetNotice .notice ul{
+        margin-top:0;
+    }
+    }
+
+    .meetOption{
+        padding:10px;
+        background-color:#ff9898;
+        border-radius:50px;
+        color:#fff;
+    }
+
+    .meetOption:link, .meetOption:visited{
+        color:#fff;
+    }
+

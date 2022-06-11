@@ -7,11 +7,15 @@
         margin:50px;
         width:70px;
         height:70px;
-        background-color: cadetblue;
+        background-color: #ea5a5a;
+        color:#fff;
         border-radius: 50%;
         text-align: center;
         justify-content: center;
         align-items: center;
+        font-size:2rem;
+        z-index:100;
+        cursor:pointer;
     }
 
     #chatBox{
@@ -20,21 +24,134 @@
         right: 0;
         bottom: 0;
         margin:50px;
-        width:400px;
-        height:600px;
-        background-color: cadetblue;
+        width:350px;
+        height:500px;
+        background-color: #ea5a5a;
         border-radius: 10px;
         text-align: center;
         justify-content: center;
-        align-items: center;
+        align-items: stretch;
         flex-direction:column;
+        z-index:100;
+        overflow:hidden;
+        border:1px solid lightgray;
+    }
+    #memberscontainer{
+        flex : 0 1 auto;
+        display:flex;
+        flex-wrap: nowrap;
+        padding:1.5rem;
+    }
+    #memberscontainer .chatimg{
+        margin-right:2px;
+    }
+
+    #logcontainer{
+        overflow-y:scroll;
+        display:flex;
+        align-items: stretch;
+        flex:1 1 auto;
+        padding:1rem;
+        padding-top:0;
+        padding-bottom:0;
     }
 
     #chatCloseBt{
+        font-size:1.2rem;
+        font-weight:bold;
         display: inline-block;
         position: absolute;
         right: 0;
         top:0;
-        padding: 15px;
+        padding: 10px;
+        padding-right: 20px;
         vertical-align:middle;
+        cursor:pointer;
+        color:#fff;
     }
+
+    #chatLog{
+        margin-top:auto;
+         flex:1;
+        width:100%;
+    }
+    .othermessage, .yourmessage{
+        display:grid;
+        width:100%;
+    }
+
+    .othermessage{
+        justify-content:left;
+    }
+
+    .yourmessage{
+        justify-content:right;
+    }
+    .othermessage .bubble{
+        margin-left:5px;
+        background-color:#fff;
+
+    }
+
+    .yourmessage .bubble{
+        margin-right:5px;
+        background-color: #ffd76d;
+    }
+
+    .bubble{
+        grid-row: 2 / span 1;
+        display:inline-block;
+        position:relative;
+        text-align : justify;
+         max-width:200px;
+        overflow:hidden;
+        white-space : normal;
+        word-break:break-all;
+        padding:1rem;
+        border-radius:10px;
+        margin-bottom:10px;
+    }
+    .othermessage span{
+        text-align:justify;
+        grid-row: 1 / span 1;
+        margin-left:10px;
+        font-size:0.8rem;
+        color:#fff;
+    }
+
+    .chatimg{
+        flex:0 0 auto;
+        grid-row: 1 / span 2;
+        width:25px;
+        height:25px;
+        display:flex;
+        justify-content:center;
+        background:gray;
+        border-radius:50%;
+        overflow:hidden;
+    }
+
+    .chatimg img{
+        width:100%;
+        height:auto;
+    }
+
+   #chatBox form{
+    padding:1rem;
+    background-color:#fff;
+   }
+
+   #chatBox form .message{
+    border:0;
+    height:2rem;
+    width:80%;
+   }
+
+   #chatBox form .message:focus {
+    outline:none;}
+
+   #chatBox form input[type=submit]{
+      background-color:transparent;
+      font-size:1.5rem;
+      border:0;
+   }

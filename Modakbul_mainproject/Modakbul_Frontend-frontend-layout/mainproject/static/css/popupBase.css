@@ -47,6 +47,14 @@
         height:50px;
         background-color: gainsboro;
         border-radius: 50%;
+        overflow:hidden;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+    .detailTitle .meetPic img{
+        width:100%;
+        height:auto;
     }
 
     .detailTitle h2{
@@ -82,7 +90,6 @@
 
     .detailTags #smallTag li::before{
         content: "# ";
-        font-weight: bold;
         font-size: 0.8rem;
     }
 
@@ -138,4 +145,7 @@
         border: 0;
         font-size: 1.2rem;
         font-weight: bold;
+
+
+
     }

@@ -89,6 +89,8 @@
 
     .detailTags h5{
         margin:10px 0px;
+        font-weight:500;
+        font-size:1rem;
     }
 
     .detailTags ul{
@@ -135,7 +137,6 @@
 
     .detailTags #smallTag li::before{
         content: "# ";
-        font-weight: bold;
         font-size: 0.8rem;
     }
 

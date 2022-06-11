@@ -2,15 +2,18 @@
 
     .contents .contents{
         display: flex;
+        width:100%;
         justify-content:center;
         flex-direction: column;
         overflow: hidden;
+            background-color:#ff9898;
     }
 
     .myPage{
         flex:auto;
         display: flex;
         align-items: stretch;
+        overflow:hidden;
     }
 
     .sidePage{
@@ -50,8 +53,12 @@
     .makeMeet{
         margin-top:1rem;
         width: 100%;
-        height:30px;
+        height:40px;
         border-radius: 30px;
+        background-color : #ea5a5a;
+        border:0;
+        color:#fff;
+        font-weight:900;
     }
 
     .level{
@@ -63,4 +70,12 @@
         list-style: none;
         padding-left: 0;
         text-align: left;
+    }
+
+    .sideOptions li a{
+        cursor : pointer;
+    }
+
+    .logout:link, .logout:visited, .logout{
+        color:gray;
     }
